@@ -11,6 +11,7 @@ namespace PluggableAI
 		public State currentState;
 		public EnemyStats enemyStats;
 		public Transform eyes;
+		public State remainState;
 
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 		[HideInInspector] public Complete.TankShooting tankShooting;
@@ -50,6 +51,12 @@ namespace PluggableAI
 			if (currentState != null && eyes != null) {
 				Gizmos.color = currentState.sceneGizmoColor;
 				Gizmos.DrawWireSphere (eyes.position, enemyStats.lookSphereCastRadius);
+			}
+		}
+
+		public void TransitionToState(State nextState) {
+			if (nextState != remainState) {
+				currentState = nextState;
 			}
 		}
 	}
