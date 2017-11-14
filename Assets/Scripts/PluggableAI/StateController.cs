@@ -15,6 +15,7 @@ namespace PluggableAI
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 		[HideInInspector] public Complete.TankShooting tankShooting;
 		[HideInInspector] public List<Transform> wayPointList;
+		[HideInInspector] public int nextWayPoint;
 
 		private bool aiActive;
 
