@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public int m_NumRoundsToWin = 5;        
-    public float m_StartDelay = 3f;         
-    public float m_EndDelay = 3f;           
-    public CameraControl m_CameraControl;   
-    public Text m_MessageText;              
-    public GameObject m_TankPrefab;         
-    public TankManager[] m_Tanks;           
+    public int m_NumRoundsToWin = 5;
+    public float m_StartDelay = 3f;
+    public float m_EndDelay = 3f;
+    public CameraControl m_CameraControl;
+    public Text m_MessageText;
+    public GameObject m_TankPrefab;
+    public GameObject[] m_TankPrefabs;
+    public TankManager[] m_Tanks;
+    public List<Transform> wayPointsForAI;
 
 
-    private int m_RoundNumber;              
-    private WaitForSeconds m_StartWait;     
-    private WaitForSeconds m_EndWait;       
+    private int m_RoundNumber;
+    private WaitForSeconds m_StartWait;
+    private WaitForSeconds m_EndWait;
     private TankManager m_RoundWinner;
-    private TankManager m_GameWinner;       
+    private TankManager m_GameWinner;
 
     private void Start()
     {
@@ -34,12 +37,20 @@ public class GameManager : MonoBehaviour
 
     private void SpawnAllTanks()
     {
-        for (int i = 0; i < m_Tanks.Length; i++)
+        //Manually setup the player at index zero in the tanks array
+        m_Tanks[0].m_Instance =
+            Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
+        m_Tanks[0].m_PlayerNumber = 1;
+        m_Tanks[0].SetupPlayerTank();
+
+        // Setup the AI tanks
+        for (int i = 1; i < m_Tanks.Length; i++)
         {
+            // ... create them, set their player number and references needed for control.
             m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
             m_Tanks[i].m_PlayerNumber = i + 1;
-            m_Tanks[i].Setup();
+            m_Tanks[i].SetupAI(wayPointsForAI);
         }
     }
 
@@ -76,13 +87,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundStarting()
     {
-		ResetAllTanks ();
-		DisableTankControl ();
+        ResetAllTanks();
+        DisableTankControl();
 
-		m_CameraControl.SetStartPositionAndSize ();
+        m_CameraControl.SetStartPositionAndSize();
 
-		m_RoundNumber++;
-		m_MessageText.text = "ROUND " + m_RoundNumber;
+        m_RoundNumber++;
+        m_MessageText.text = "ROUND " + m_RoundNumber;
 
         yield return m_StartWait;
     }
@@ -90,32 +101,34 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator RoundPlaying()
     {
-		EnableTankControl ();
+        EnableTankControl();
 
-		m_MessageText.text = string.Empty;
+        m_MessageText.text = string.Empty;
 
-		while (!OneTankLeft ()) {
-			yield return null;
-		}
+        while (!OneTankLeft())
+        {
+            yield return null;
+        }
     }
 
 
     private IEnumerator RoundEnding()
     {
-		DisableTankControl ();
+        DisableTankControl();
 
-		m_RoundWinner = null;
+        m_RoundWinner = null;
 
-		m_RoundWinner = GetRoundWinner ();
+        m_RoundWinner = GetRoundWinner();
 
-		if (m_RoundWinner != null) {
-			m_RoundWinner.m_Wins++;
-		}
+        if (m_RoundWinner != null)
+        {
+            m_RoundWinner.m_Wins++;
+        }
 
-		m_GameWinner = GetGameWinner ();
+        m_GameWinner = GetGameWinner();
 
-		string message = EndMessage ();
-		m_MessageText.text = message;
+        string message = EndMessage();
+        m_MessageText.text = message;
 
         yield return m_EndWait;
     }
@@ -133,7 +146,7 @@ public class GameManager : MonoBehaviour
 
         return numTanksLeft <= 1;
     }
-		
+
     private TankManager GetRoundWinner()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
