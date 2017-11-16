@@ -4,6 +4,11 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum GameMode
+{
+    LOCAL_MULTIPLAYER,
+    SINGLE_PLAYER,
+}
 public class GameManager : MonoBehaviour
 {
     public int m_NumRoundsToWin = 5;
@@ -15,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_TankPrefabs;
     public TankManager[] m_Tanks;
     public List<Transform> wayPointsForAI;
-
+    public GameMode m_GameMode = GameMode.SINGLE_PLAYER;
 
     private int m_RoundNumber;
     private WaitForSeconds m_StartWait;
@@ -37,20 +42,33 @@ public class GameManager : MonoBehaviour
 
     private void SpawnAllTanks()
     {
-        //Manually setup the player at index zero in the tanks array
-        m_Tanks[0].m_Instance =
-            Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
-        m_Tanks[0].m_PlayerNumber = 1;
-        m_Tanks[0].SetupPlayerTank();
-
-        // Setup the AI tanks
-        for (int i = 1; i < m_Tanks.Length; i++)
+        if (m_GameMode == GameMode.LOCAL_MULTIPLAYER)
         {
-            // ... create them, set their player number and references needed for control.
-            m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-            m_Tanks[i].m_PlayerNumber = i + 1;
-            m_Tanks[i].SetupAI(wayPointsForAI);
+            for (int i = 0; i < m_Tanks.Length; i++)
+            {
+                m_Tanks[i].m_Instance =
+                    Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                m_Tanks[i].m_PlayerNumber = i + 1;
+                m_Tanks[i].SetupPlayerTank();
+            }
+        }
+        if (m_GameMode == GameMode.SINGLE_PLAYER)
+        {
+            //Manually setup the player at index zero in the tanks array
+            m_Tanks[0].m_Instance =
+                Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
+            m_Tanks[0].m_PlayerNumber = 1;
+            m_Tanks[0].SetupPlayerTank();
+
+            // Setup the AI tanks
+            for (int i = 1; i < m_Tanks.Length; i++)
+            {
+                // ... create them, set their player number and references needed for control.
+                m_Tanks[i].m_Instance =
+                    Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                m_Tanks[i].m_PlayerNumber = i + 1;
+                m_Tanks[i].SetupAI(wayPointsForAI);
+            }
         }
     }
 
