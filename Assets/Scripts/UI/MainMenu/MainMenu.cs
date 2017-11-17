@@ -18,4 +18,8 @@ public class MainMenu : MonoBehaviour {
 	public void LoadGame(string levelName) {
 		SceneManager.LoadScene(levelName);
 	}
+
+	public void QuitGame(){
+		Application.Quit();
+	}
 }
