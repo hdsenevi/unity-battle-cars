@@ -48,10 +48,12 @@ public class SceneMaterialSwapper : EditorWindow {
         {
             MeshRenderer[] mrs = go.GetComponentsInChildren<MeshRenderer>() as MeshRenderer[];
             foreach (MeshRenderer mr in mrs) {
-                foreach(Material mat in mr.sharedMaterials) {
-                    // Start here
-                    if (mat.name == "YellowLight") {
-                        Debug.Log("material name : " + mat.name);
+                Material[] mats = mr.sharedMaterials;
+                for(int i = 0; i < mats.Length; i++) {
+                    if (mats[i].name == matFind.name) {
+                        Debug.Log("material name : " + mats[i].name);
+                        mats[i] = matReplace;
+                        mr.materials = mats;
                     }
                 }
             }
