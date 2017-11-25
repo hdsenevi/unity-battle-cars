@@ -51,7 +51,6 @@ public class SceneMaterialSwapper : EditorWindow {
                 Material[] mats = mr.sharedMaterials;
                 for(int i = 0; i < mats.Length; i++) {
                     if (mats[i].name == matFind.name) {
-                        Debug.Log("material name : " + mats[i].name);
                         mats[i] = matReplace;
                         mr.materials = mats;
                     }
