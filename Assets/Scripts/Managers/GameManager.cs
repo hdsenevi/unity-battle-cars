@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum GameMode
 {
@@ -28,7 +29,12 @@ public class GameManager : MonoBehaviour
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;
 
-    private void Start()
+    void Awake()
+    {
+        SceneManager.LoadSceneAsync("Level_Snow", LoadSceneMode.Additive);
+    }
+
+    public void Init()
     {
         m_StartWait = new WaitForSeconds(m_StartDelay);
         m_EndWait = new WaitForSeconds(m_EndDelay);
