@@ -18,15 +18,18 @@ public class LevelPropInjector : MonoBehaviour
             gameManager.m_CameraControl = m_CameraControl;
             foreach (Transform trans in m_Waypoints)
             {
-				gameManager.wayPointsForAI.Add(trans);
-            }
-            
-			for (int i = 0; i < m_SpawnPoints.Length; i++)
-            {
-				gameManager.m_Tanks[i].m_SpawnPoint = m_SpawnPoints[i];
+                gameManager.wayPointsForAI.Add(trans);
             }
 
-			gameManager.Init();
+            for (int i = 0; i < m_SpawnPoints.Length; i++)
+            {
+                if (i < gameManager.m_Tanks.Length)
+                {
+                    gameManager.m_Tanks[i].m_SpawnPoint = m_SpawnPoints[i];
+                }
+            }
+
+            gameManager.Init();
         }
     }
 }
