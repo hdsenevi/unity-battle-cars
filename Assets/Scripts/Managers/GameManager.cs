@@ -29,11 +29,6 @@ public class GameManager : MonoBehaviour
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;
 
-    void Awake()
-    {
-        SceneManager.LoadSceneAsync("Level_Snow", LoadSceneMode.Additive);
-    }
-
     public void Init()
     {
         m_StartWait = new WaitForSeconds(m_StartDelay);
