@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu : MonoBehaviour
+{
+    public void LoadGame(int mode)
+    {
+        GameMode gameMode = (GameMode)mode;
+        MapManager.GetInstance().SetGameMode(gameMode);
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        SceneManager.LoadScene("MapSelect");
+    }
 
-	public void LoadGame(string levelName) {
-		SceneManager.LoadScene(levelName);
-	}
-
-	public void QuitGame(){
-		Application.Quit();
-	}
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

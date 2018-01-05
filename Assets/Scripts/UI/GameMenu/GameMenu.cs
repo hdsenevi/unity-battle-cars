@@ -14,6 +14,7 @@ public class GameMenu : MonoBehaviour
     void Start()
     {
         m_pauseMenuShowing = false;
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -25,6 +26,8 @@ public class GameMenu : MonoBehaviour
 
             m_pauseMenuPanel.SetActive(m_pauseMenuShowing);
             m_messageText.SetActive(!m_pauseMenuShowing);
+
+            Time.timeScale = m_pauseMenuShowing ? 0f : 1f;
         }
     }
 
