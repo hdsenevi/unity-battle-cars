@@ -14,7 +14,7 @@ public class TankManager
     [HideInInspector] public int m_Wins;
 
 
-    private TankMovement m_Movement;
+    private TwinStickMovement m_Movement;
     private TankShooting m_Shooting;
     private GameObject m_CanvasGameObject;
     private StateController m_StateController;				// Reference to the StateController for AI tanks
@@ -37,7 +37,7 @@ public class TankManager
     {
         // Get references to the components.
 
-        m_Movement = m_Instance.GetComponent<TankMovement>();
+        m_Movement = m_Instance.GetComponent<TwinStickMovement>();
         m_Shooting = m_Instance.GetComponent<TankShooting>();
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 

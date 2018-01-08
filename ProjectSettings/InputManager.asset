@@ -70,8 +70,8 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal1
-    descriptiveName: Horizontal keyboard axis for player 1
+    m_Name: LHorizontal1
+    descriptiveName: Left horizontal keyboard axis - player 1 keyboard
     descriptiveNegativeName: 
     negativeButton: a
     positiveButton: d
@@ -86,11 +86,43 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Vertical1
-    descriptiveName: Vertical keyboard axis for player 1
+    m_Name: LVertical1
+    descriptiveName: Left vertical keyboard axis - player 1 keyboard
     descriptiveNegativeName: 
-    negativeButton: s
-    positiveButton: w
+    negativeButton: w
+    positiveButton: s
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: RHorizontal1
+    descriptiveName: Right horizontal keyboard axis - player 1 keyboard
+    descriptiveNegativeName: 
+    negativeButton: c
+    positiveButton: b
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: RVertical1
+    descriptiveName: Right vertical keyboard axis - player 1 keyboard
+    descriptiveNegativeName: 
+    negativeButton: f
+    positiveButton: v
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -118,8 +150,40 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal2
-    descriptiveName: Horizontal keyboard axis for player 2
+    m_Name: LHorizontal2
+    descriptiveName: Left horizontal keyboard axis for - player 2 keybaord
+    descriptiveNegativeName: 
+    negativeButton: ;
+    positiveButton: \
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: LVertical2
+    descriptiveName: Left vertical keyboard axis for - player 2 keyboard
+    descriptiveNegativeName: 
+    negativeButton: '['
+    positiveButton: ''''
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 0.001
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: RHorizontal2
+    descriptiveName: Right horizontal keyboard axis for - player 2 keybaord
     descriptiveNegativeName: 
     negativeButton: left
     positiveButton: right
@@ -134,11 +198,11 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Vertical2
-    descriptiveName: Vertical keyboard axis for player 2
+    m_Name: RVertical2
+    descriptiveName: Right vertical keyboard axis for - player 2 keyboard
     descriptiveNegativeName: 
-    negativeButton: down
-    positiveButton: up
+    negativeButton: up
+    positiveButton: down
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -166,104 +230,8 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal1
-    descriptiveName: Horizontal gamepad axis for player 1
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.19
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 2
-    axis: 0
-    joyNum: 3
-  - serializedVersion: 3
-    m_Name: Vertical1
-    descriptiveName: Vertical gamepad axis for player 1
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.19
-    sensitivity: 1
-    snap: 0
-    invert: 1
-    type: 2
-    axis: 1
-    joyNum: 3
-  - serializedVersion: 3
-    m_Name: Fire1
-    descriptiveName: Fire gamepad button for player 1
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick 1 button 14
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 1000
-    dead: 0.001
-    sensitivity: 1000
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 13
-    joyNum: 1
-  - serializedVersion: 3
-    m_Name: Horizontal2
-    descriptiveName: Horizontal gamepad axis for player 2
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.19
-    sensitivity: 1
-    snap: 0
-    invert: 0
-    type: 2
-    axis: 0
-    joyNum: 2
-  - serializedVersion: 3
-    m_Name: Vertical2
-    descriptiveName: Vertical gamepad axis for player 2
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 0
-    dead: 0.19
-    sensitivity: 1
-    snap: 0
-    invert: 1
-    type: 2
-    axis: 2
-    joyNum: 2
-  - serializedVersion: 3
-    m_Name: Fire2
-    descriptiveName: Fire gamepad button for player 2
-    descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: joystick 2 button 0
-    altNegativeButton: 
-    altPositiveButton: 
-    gravity: 1000
-    dead: 0.001
-    sensitivity: 1000
-    snap: 0
-    invert: 0
-    type: 0
-    axis: 0
-    joyNum: 2
-  - serializedVersion: 3
     m_Name: LHorizontal1
-    descriptiveName: Left stick horizontal
+    descriptiveName: Left stick horizontal - player 1 joystick
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -279,7 +247,7 @@ InputManager:
     joyNum: 1
   - serializedVersion: 3
     m_Name: LVertical1
-    descriptiveName: Left stick vertical
+    descriptiveName: Left stick vertical - player 1 joystick
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -295,7 +263,7 @@ InputManager:
     joyNum: 1
   - serializedVersion: 3
     m_Name: RHorizontal1
-    descriptiveName: Right stick horizontal
+    descriptiveName: Right stick horizontal - player 1 joystick
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -311,7 +279,7 @@ InputManager:
     joyNum: 1
   - serializedVersion: 3
     m_Name: RVertical1
-    descriptiveName: Right stick vertical
+    descriptiveName: Right stick vertical - player 1 joystick
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
@@ -325,3 +293,99 @@ InputManager:
     type: 2
     axis: 3
     joyNum: 1
+  - serializedVersion: 3
+    m_Name: Fire1
+    descriptiveName: Fire gamepad button - player 1 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 14
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 13
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: LHorizontal2
+    descriptiveName: Left stick horizontal - player 2 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 0
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: LVertical2
+    descriptiveName: Left stick vertical - player 2 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 1
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: RHorizontal2
+    descriptiveName: Right stick horizontal - player 2 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: RVertical2
+    descriptiveName: Right stick vertical - player 2 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.19
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 3
+    joyNum: 2
+  - serializedVersion: 3
+    m_Name: Fire1
+    descriptiveName: Fire gamepad button - player 2 joystick
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick 1 button 14
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 13
+    joyNum: 2

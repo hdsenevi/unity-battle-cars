@@ -10,8 +10,10 @@ public class TwinStickMovement : MonoBehaviour
     public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
 
-    private string m_MovementAxisName;
-    private string m_TurnAxisName;
+    private string m_MovementAxisNameX;
+    private string m_MovementAxisNameY;
+    private string m_TurnAxisNameX;
+    private string m_TurnAxisNameY;
     private Rigidbody m_Rigidbody;
     private float m_OriginalPitch;
     private Vector3 m_MoveInputValue;
@@ -22,8 +24,8 @@ public class TwinStickMovement : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_CameraRight = Quaternion.Euler(0f, -45f, 0f) * Vector3.right;
-        m_CameraForward = Quaternion.Euler(0f, -45f, 0f) * Vector3.forward;
+        m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
+        m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
     }
 
 
@@ -43,8 +45,10 @@ public class TwinStickMovement : MonoBehaviour
 
     private void Start()
     {
-        // m_MovementAxisName = "Vertical" + m_PlayerNumber;
-        // m_TurnAxisName = "Horizontal" + m_PlayerNumber;
+        m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
+        m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
+        m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
+        m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
 
         m_OriginalPitch = m_MovementAudio.pitch;
     }
@@ -52,14 +56,11 @@ public class TwinStickMovement : MonoBehaviour
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.
-        // m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-        // m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
+        m_MoveInputValue.x = Input.GetAxis(m_MovementAxisNameX);
+        m_MoveInputValue.z = Input.GetAxis(m_MovementAxisNameY);
 
-        m_MoveInputValue.x = Input.GetAxis("LHorizontal1");
-        m_MoveInputValue.z = Input.GetAxis("LVertical1");
-
-        m_TurnInputValue.x = Input.GetAxis("RHorizontal1");
-        m_TurnInputValue.z = Input.GetAxis("RVertical1");
+        m_TurnInputValue.x = Input.GetAxis(m_TurnAxisNameX);
+        m_TurnInputValue.z = Input.GetAxis(m_TurnAxisNameY);
 
         EngineAudio();
     }
@@ -111,7 +112,11 @@ public class TwinStickMovement : MonoBehaviour
 
         if (playerDirection.sqrMagnitude > 0.0f)
         {
-            m_Rigidbody.MoveRotation(Quaternion.LookRotation(playerDirection, Vector3.up));
+            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
         }
+
+        // float turn = (m_TurnInputValue.x + m_TurnInputValue.z) * m_TurnSpeed * Time.deltaTime;
+		// Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
+		// m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
     }
 }
