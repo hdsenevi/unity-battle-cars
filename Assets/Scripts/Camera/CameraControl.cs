@@ -82,7 +82,8 @@ public class CameraControl : MonoBehaviour
 
             size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
 
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
+            if(m_Camera)
+                size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
         }
         
         size += m_ScreenEdgeBuffer;
@@ -99,6 +100,7 @@ public class CameraControl : MonoBehaviour
 
         transform.position = m_DesiredPosition;
 
-        m_Camera.orthographicSize = FindRequiredSize();
+        if(m_Camera)
+            m_Camera.orthographicSize = FindRequiredSize();
     }
 }
