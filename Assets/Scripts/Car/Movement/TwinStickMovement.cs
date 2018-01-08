@@ -96,7 +96,6 @@ public class TwinStickMovement : MonoBehaviour
         Turn();
     }
 
-
     private void Move()
     {
         // Adjust the position of the car based on the player's input.

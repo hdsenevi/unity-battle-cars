@@ -37,8 +37,6 @@ public class TankShooting : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Input.GetButtonDown(m_FireButton) : " + Input.GetButtonDown(m_FireButton));
-        
         // Track the current state of the fire button and make decisions based on the current launch force.
         m_AimSlider.value = m_MinLaunchForce;
 
