@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using PluggableAI;
 
+public enum CarType {
+    HUMAN,
+    NPC,
+}
+
 [Serializable]
 public class TankManager
 {
@@ -12,7 +17,7 @@ public class TankManager
     [HideInInspector] public string m_ColoredPlayerText;
     [HideInInspector] public GameObject m_Instance;
     [HideInInspector] public int m_Wins;
-
+    [HideInInspector] public CarType m_CarType;
 
     private TwinStickMovement m_Movement;
     private TankShooting m_Shooting;
@@ -36,13 +41,13 @@ public class TankManager
     public void SetupPlayerTank()
     {
         // Get references to the components.
-
         m_Movement = m_Instance.GetComponent<TwinStickMovement>();
         m_Shooting = m_Instance.GetComponent<TankShooting>();
         m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
         // Set the player numbers to be consistent across the scripts.
-        m_Movement.m_PlayerNumber = m_PlayerNumber;
+        if (!m_Instance.tag.Equals("NPC"))
+            m_Movement.m_PlayerNumber = m_PlayerNumber;
         m_Shooting.m_PlayerNumber = m_PlayerNumber;
 
         // Create a string using the correct color that says 'PLAYER 1' etc based on the tank's color and the player's number.
@@ -79,10 +84,12 @@ public class TankManager
     }
 
 
-    public void Reset()
+    public void Reset(bool resetTransform = true)
     {
-        m_Instance.transform.position = m_SpawnPoint.position;
-        m_Instance.transform.rotation = m_SpawnPoint.rotation;
+        if (resetTransform) {
+            m_Instance.transform.position = m_SpawnPoint.position;
+            m_Instance.transform.rotation = m_SpawnPoint.rotation;
+        }
 
         m_Instance.SetActive(false);
         m_Instance.SetActive(true);

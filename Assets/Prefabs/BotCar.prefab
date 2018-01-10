@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 114848498201523340}
   m_Layer: 9
   m_Name: BotCar
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b38fa3f5188f6419ab17bc1669c18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerNumber: 1
+  m_PlayerNumber: 7
   m_Shell: {fileID: 54015032668001242, guid: 956a71acb66f64df68e9e819837f3900, type: 2}
   m_FireTransform: {fileID: 4518191331968138}
   m_AimSlider: {fileID: 114124589183515936}

@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public enum GameMode
 {
     LOCAL_MULTIPLAYER,
     SINGLE_PLAYER,
+    SURVIVAL_MODE,
 }
 public class GameManager : MonoBehaviour
 {
@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     public float m_EndDelay = 3f;
     public CameraControl m_CameraControl;
     public Text m_MessageText;
-    public GameObject m_TankPrefab;
     public GameObject[] m_TankPrefabs;
+    public GameObject[] m_EnemyPrefabs;
     public TankManager[] m_Tanks;
     public List<Transform> wayPointsForAI;
     public GameMode m_GameMode = GameMode.SINGLE_PLAYER;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;
 
-    public void Init()
+    public virtual void Init()
     {
         m_StartWait = new WaitForSeconds(m_StartDelay);
         m_EndWait = new WaitForSeconds(m_EndDelay);
@@ -40,39 +40,40 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameLoop());
     }
 
-
     private void SpawnAllTanks()
     {
-        if (m_GameMode == GameMode.LOCAL_MULTIPLAYER)
+        switch (m_GameMode)
         {
-            for (int i = 0; i < m_Tanks.Length; i++)
-            {
-                m_Tanks[i].m_Instance =
-                    Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-                m_Tanks[i].m_PlayerNumber = i + 1;
-                m_Tanks[i].SetupPlayerTank();
-            }
-        }
-        if (m_GameMode == GameMode.SINGLE_PLAYER)
-        {
-            //Manually setup the player at index zero in the tanks array
-            m_Tanks[0].m_Instance =
-                Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
-            m_Tanks[0].m_PlayerNumber = 1;
-            m_Tanks[0].SetupPlayerTank();
+            case GameMode.LOCAL_MULTIPLAYER:
+                for (int i = 0; i < m_Tanks.Length; i++)
+                {
+                    m_Tanks[i].m_Instance =
+                        Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                    m_Tanks[i].m_PlayerNumber = i + 1;
+                    m_Tanks[i].SetupPlayerTank();
+                }
+                break;
+            case GameMode.SINGLE_PLAYER:
+                //Manually setup the player at index zero in the tanks array
+                m_Tanks[0].m_Instance =
+                    Instantiate(m_TankPrefabs[0], m_Tanks[0].m_SpawnPoint.position, m_Tanks[0].m_SpawnPoint.rotation) as GameObject;
+                m_Tanks[0].m_PlayerNumber = 1;
+                m_Tanks[0].SetupPlayerTank();
 
-            // Setup the AI tanks
-            for (int i = 1; i < m_Tanks.Length; i++)
-            {
-                // ... create them, set their player number and references needed for control.
-                m_Tanks[i].m_Instance =
-                    Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
-                m_Tanks[i].m_PlayerNumber = i + 1;
-                m_Tanks[i].SetupAI(wayPointsForAI);
-            }
+                // Setup the AI tanks
+                for (int i = 1; i < m_Tanks.Length; i++)
+                {
+                    // ... create them, set their player number and references needed for control.
+                    m_Tanks[i].m_Instance =
+                        Instantiate(m_TankPrefabs[i], m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+                    m_Tanks[i].m_PlayerNumber = i + 1;
+                    m_Tanks[i].SetupAI(wayPointsForAI);
+                }
+                break;
+            case GameMode.SURVIVAL_MODE:
+                break;
         }
     }
-
 
     private void SetCameraTargets()
     {
@@ -85,7 +86,6 @@ public class GameManager : MonoBehaviour
 
         m_CameraControl.m_Targets = targets;
     }
-
 
     private IEnumerator GameLoop()
     {
@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private IEnumerator RoundStarting()
     {
         ResetAllTanks();
@@ -117,7 +116,6 @@ public class GameManager : MonoBehaviour
         yield return m_StartWait;
     }
 
-
     private IEnumerator RoundPlaying()
     {
         EnableTankControl();
@@ -129,7 +127,6 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
-
 
     private IEnumerator RoundEnding()
     {
@@ -151,7 +148,6 @@ public class GameManager : MonoBehaviour
 
         yield return m_EndWait;
     }
-
 
     private bool OneTankLeft()
     {
@@ -177,7 +173,6 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-
     private TankManager GetGameWinner()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -188,7 +183,6 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-
 
     private string EndMessage()
     {
@@ -218,7 +212,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void EnableTankControl()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -226,7 +219,6 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].EnableControl();
         }
     }
-
 
     private void DisableTankControl()
     {

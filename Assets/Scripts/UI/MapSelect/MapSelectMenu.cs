@@ -17,6 +17,9 @@ public class MapSelectMenu : MonoBehaviour
             case GameMode.SINGLE_PLAYER:
                 SceneManager.LoadScene(SceneNames.SinglePlayer);
                 break;
+            case GameMode.SURVIVAL_MODE:
+                SceneManager.LoadScene(SceneNames.Survival);
+                break;
             default:
                 SceneManager.LoadScene(SceneNames.SinglePlayer);
                 break;

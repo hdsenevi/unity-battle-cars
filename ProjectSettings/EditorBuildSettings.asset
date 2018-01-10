@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main-Single.unity
     guid: 33dadc68a17c14e1b807486429dccba7
   - enabled: 1
+    path: Assets/Scenes/Main-Survival.unity
+    guid: b5306fff8fcd24ba4b28d747447c12a9
+  - enabled: 1
     path: Assets/Scenes/MapSelect.unity
     guid: 9d6afeebf95ff4c42b985eeb409694f7
   - enabled: 1

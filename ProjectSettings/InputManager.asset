@@ -153,8 +153,8 @@ InputManager:
     m_Name: LHorizontal2
     descriptiveName: Left horizontal keyboard axis for - player 2 keybaord
     descriptiveNegativeName: 
-    negativeButton: ;
-    positiveButton: \
+    negativeButton: l
+    positiveButton: ''''
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -169,8 +169,8 @@ InputManager:
     m_Name: LVertical2
     descriptiveName: Left vertical keyboard axis for - player 2 keyboard
     descriptiveNegativeName: 
-    negativeButton: '['
-    positiveButton: ''''
+    negativeButton: p
+    positiveButton: ;
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3

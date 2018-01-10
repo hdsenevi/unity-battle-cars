@@ -7,6 +7,7 @@ public static class SceneNames {
 	public static readonly string MapSelect = "MapSelect";
 	public static readonly string MultiPlayer = "Main-Multiplayer";
 	public static readonly string SinglePlayer = "Main-Single";
+	public static readonly string Survival = "Main-Survival";
 	public static readonly string LevelSnow = "Level_Snow";
 	public static readonly string LevelDesert = "Level_Desert";
 }

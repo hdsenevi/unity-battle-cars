@@ -31,5 +31,35 @@ public class LevelPropInjector : MonoBehaviour
 
             gameManager.Init();
         }
+
+        // TODO / REFACTOR : get rid of seperate game managers and use on manager system
+        GameMgrSurvivalMode gameManagerSurvival = GameObject.FindObjectOfType(typeof(GameMgrSurvivalMode)) as GameMgrSurvivalMode;
+
+        if (gameManagerSurvival)
+        {
+            gameManagerSurvival.m_CameraControl = m_CameraControl;
+            foreach (Transform trans in m_Waypoints)
+            {
+                gameManagerSurvival.wayPointsForAI.Add(trans);
+            }
+
+            for (int i = 0; i < m_SpawnPoints.Length; i++)
+            {
+                if (i < gameManagerSurvival.m_Cars.Length)
+                {
+                    gameManagerSurvival.m_Cars[i].m_SpawnPoint = m_SpawnPoints[i];
+                }
+            }
+
+            for (int i = 0; i < gameManagerSurvival.m_EnemyCars.Length; i++)
+            {
+                gameManagerSurvival.m_EnemyCars[i].m_SpawnPoint = m_SpawnPoints[Random.Range(0, m_SpawnPoints.Length - 1)];
+            }
+
+            gameManagerSurvival.m_SpawnPoints = m_SpawnPoints;
+
+
+            gameManagerSurvival.Init();
+        }
     }
 }
