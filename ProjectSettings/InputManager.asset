@@ -374,11 +374,11 @@ InputManager:
     axis: 3
     joyNum: 2
   - serializedVersion: 3
-    m_Name: Fire1
+    m_Name: Fire2
     descriptiveName: Fire gamepad button - player 2 joystick
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: joystick 1 button 14
+    positiveButton: joystick 2 button 5
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
