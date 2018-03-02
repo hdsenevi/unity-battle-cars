@@ -1404,7 +1404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2017185657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b31b95e0ffdf4e24a9c6b5933645c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_NetworkPort: 7777
@@ -1478,6 +1478,10 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
+  sceneCamera: {fileID: 1349571469}
+  cameraRotationRadius: 24
+  cameraRoataitonSpeed: 3
+  canRotate: 1
 --- !u!4 &2017185660
 Transform:
   m_ObjectHideFlags: 0
