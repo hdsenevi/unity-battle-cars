@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.Networking;
 
-public class MultiplayerMovement : MonoBehaviour
+public class MultiplayerMovement : NetworkBehaviour
 {
     public int m_PlayerNumber = 1;
     public float m_Speed = 12f;
@@ -12,9 +13,9 @@ public class MultiplayerMovement : MonoBehaviour
     public float m_PitchRange = 0.2f;
     [Header("Camera position variables")]
     [SerializeField]
-    float cameraDisance = 10f;
+    float cameraDisance = 16f;
     [SerializeField]
-    float cameraHeight = 10f;
+    float cameraHeight = 16f;
 
     private string m_MovementAxisNameX;
     private string m_MovementAxisNameY;
@@ -28,23 +29,10 @@ public class MultiplayerMovement : MonoBehaviour
     private Vector3 m_CameraForward;
     private Vector3 m_cameraOffset;
     private Transform m_mainCamera;
-
-    private void Awake()
-    {
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
-        m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
-
-        m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
-
-        m_mainCamera = Camera.main.transform;
-        MoveCamera();
-    }
-
-
     private void OnEnable()
     {
-        m_Rigidbody.isKinematic = false;
+        if (m_Rigidbody)
+            m_Rigidbody.isKinematic = false;
         m_MoveInputValue = new Vector3(0f, 0f, 0f);
         m_TurnInputValue = new Vector3(0f, 0f, 0f);
     }
@@ -52,18 +40,35 @@ public class MultiplayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        m_Rigidbody.isKinematic = true;
+        if (m_Rigidbody)
+            m_Rigidbody.isKinematic = true;
     }
 
 
     private void Start()
     {
+        // If this is not the local player
+        if (!isLocalPlayer)
+        {
+            Destroy(this);
+            return;
+        }
+
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
+        m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
+
+        m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
+        m_mainCamera = Camera.main.transform;
+
         m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
         m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
         m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
         m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
 
         m_OriginalPitch = m_MovementAudio.pitch;
+
+        MoveCamera();
     }
 
     private void Update()

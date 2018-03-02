@@ -1210,7 +1210,7 @@ MonoBehaviour:
     i14: 75
     i15: 46
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114168515436375452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1344,8 +1344,8 @@ MonoBehaviour:
   m_EngineIdling: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
   m_EngineDriving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
   m_PitchRange: 0.2
-  cameraDisance: 10
-  cameraHeight: 10
+  cameraDisance: 20
+  cameraHeight: 20
 --- !u!114 &114470423406779112
 MonoBehaviour:
   m_ObjectHideFlags: 1
