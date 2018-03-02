@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 114383897818839624}
   - component: {fileID: 114168515436375452}
   - component: {fileID: 114396475554690722}
+  - component: {fileID: 114135617710147178}
   m_Layer: 9
   m_Name: PlayerCar
   m_TagString: Player
@@ -1178,6 +1179,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 0
+--- !u!114 &114135617710147178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1286973114996126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 125
+    i1: 117
+    i2: 15
+    i3: 4
+    i4: 105
+    i5: 129
+    i6: 36
+    i7: 49
+    i8: 122
+    i9: 228
+    i10: 142
+    i11: 82
+    i12: 162
+    i13: 133
+    i14: 75
+    i15: 46
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114168515436375452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1196,8 +1229,6 @@ MonoBehaviour:
   m_EngineIdling: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
   m_EngineDriving: {fileID: 8300000, guid: d7ca9fb5aa30155449192b23d7fb3336, type: 3}
   m_PitchRange: 0.2
-  cameraDisance: 10
-  cameraHeight: 10
 --- !u!114 &114345204652792316
 MonoBehaviour:
   m_ObjectHideFlags: 1
