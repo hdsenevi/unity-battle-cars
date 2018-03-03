@@ -26,12 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Testbed_Network_LAN.unity
     guid: b84ec1c8ca0aa43ccbea0d72d72710dd
-  - enabled: 0
-    path: Assets/Scenes/Testbed_Netiwork_Lobby.unity
-    guid: 45b22c18ee86b444eaf72f6f4cdf563b
   - enabled: 1
-    path: Assets/SampleScenes/Scenes/NetworkLobby.unity
-    guid: 3c0d76c55eed6214f9d3b070caede5d3
+    path: Assets/Scenes/Testbed_Network_Lobby.unity
+    guid: e3f79260cb2a9466b9d2b65f55807082
   - enabled: 1
     path: Assets/Scenes/Testbed_Network_MatchMaking.unity
     guid: 93d04dd36d66c4798afbe11722c4a2d6
