@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class NetworkTankShooting : NetworkBehaviour
 {
@@ -51,7 +52,7 @@ public class NetworkTankShooting : NetworkBehaviour
             // Fire(m_CurrentLaunchForce, 1);
             CmdFire();
         }
-        else if (Input.GetButtonDown(m_FireButton))
+        else if (CrossPlatformInputManager.GetButtonDown(m_FireButton))
         {
             // Have we pressed fire for the first time?
             m_Fired = false;
@@ -60,14 +61,14 @@ public class NetworkTankShooting : NetworkBehaviour
             m_ShootingAudio.clip = m_ChargingClip;
             m_ShootingAudio.Play();
         }
-        else if (Input.GetButton(m_FireButton) && !m_Fired)
+        else if (CrossPlatformInputManager.GetButton(m_FireButton) && !m_Fired)
         {
             // Holding the fire button, not yet fired
             m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
 
             m_AimSlider.value = m_CurrentLaunchForce;
         }
-        else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
+        else if (CrossPlatformInputManager.GetButtonUp(m_FireButton) && !m_Fired)
         {
             // we release the button, having not fired yet
             // Fire(m_CurrentLaunchForce, 1);

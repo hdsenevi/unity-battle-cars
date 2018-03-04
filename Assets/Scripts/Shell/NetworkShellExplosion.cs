@@ -33,7 +33,7 @@ public class NetworkShellExplosion : NetworkBehaviour
 
             targerRigidbody.AddExplosionForce(m_ExplosionForce, transform.position, m_ExplosionRadius);
 
-            TankHealth targetHealth = targerRigidbody.GetComponent<TankHealth>();
+            NetworkTankHealth targetHealth = targerRigidbody.GetComponent<NetworkTankHealth>();
 
             if (!targetHealth)
                 continue;
