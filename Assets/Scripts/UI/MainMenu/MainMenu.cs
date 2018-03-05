@@ -5,12 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public bool ArGame = false;
     public void LoadGame(int mode)
     {
-        GameMode gameMode = (GameMode)mode;
-        MapManager.GetInstance().SetGameMode(gameMode);
+        if (ArGame)
+        {
+            SceneManager.LoadScene("Testbed_Network_Lobby");
+        }
+        else
+        {
+            GameMode gameMode = (GameMode)mode;
+            MapManager.GetInstance().SetGameMode(gameMode);
 
-        SceneManager.LoadScene("MapSelect");
+            SceneManager.LoadScene("MapSelect");
+        }
     }
 
     public void QuitGame()
