@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Testbed_Network_LAN.unity
     guid: b84ec1c8ca0aa43ccbea0d72d72710dd
   - enabled: 1
+    path: Assets/Scenes/AR/AR.unity
+    guid: 075a9e86fecc447b88531cd2f1abf782
+  - enabled: 1
     path: Assets/Scenes/MainMenu_Network.unity
     guid: 1e8425032096a475e8ac769922207d81
   - enabled: 1
