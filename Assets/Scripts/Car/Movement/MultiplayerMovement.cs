@@ -17,10 +17,10 @@ public class MultiplayerMovement : NetworkBehaviour
     [SerializeField]
     float cameraHeight = 16f;
 
-    private string m_MovementAxisNameX;
-    private string m_MovementAxisNameY;
-    private string m_TurnAxisNameX;
-    private string m_TurnAxisNameY;
+    // private string m_MovementAxisNameX;
+    // private string m_MovementAxisNameY;
+    // private string m_TurnAxisNameX;
+    // private string m_TurnAxisNameY;
     private Rigidbody m_Rigidbody;
     private float m_OriginalPitch;
     private Vector3 m_MoveInputValue;
@@ -30,6 +30,7 @@ public class MultiplayerMovement : NetworkBehaviour
     private Vector3 m_cameraOffset;
     private Transform m_mainCamera;
     private ARManager m_arManager;
+    private GameObject m_hitCube;
 
     private void OnEnable()
     {
@@ -64,13 +65,17 @@ public class MultiplayerMovement : NetworkBehaviour
         if (!m_arManager)
             Debug.LogError("Ar Manager not found. This is a problem");
 
+        m_hitCube = GameObject.FindGameObjectWithTag("HitCube");
+        if (!m_hitCube)
+            Debug.LogError("Hit Cube is not found. This is a problem");
+
         m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
         m_mainCamera = Camera.main.transform;
 
-        m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
-        m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
-        m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
-        m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
+        // m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
+        // m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
+        // m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
+        // m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
 
         m_OriginalPitch = m_MovementAudio.pitch;
 
@@ -80,11 +85,11 @@ public class MultiplayerMovement : NetworkBehaviour
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.
-        m_MoveInputValue.x = Input.GetAxis(m_MovementAxisNameX);
-        m_MoveInputValue.z = Input.GetAxis(m_MovementAxisNameY);
+        // m_MoveInputValue.x = Input.GetAxis(m_MovementAxisNameX);
+        // m_MoveInputValue.z = Input.GetAxis(m_MovementAxisNameY);
 
-        m_TurnInputValue.x = Input.GetAxis(m_TurnAxisNameX);
-        m_TurnInputValue.z = Input.GetAxis(m_TurnAxisNameY);
+        // m_TurnInputValue.x = Input.GetAxis(m_TurnAxisNameX);
+        // m_TurnInputValue.z = Input.GetAxis(m_TurnAxisNameY);
 
         EngineAudio();
     }
@@ -117,16 +122,36 @@ public class MultiplayerMovement : NetworkBehaviour
     private void FixedUpdate()
     {
         // Move and turn the car.
-        float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
+        // float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
         float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
 
         Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
+        Turn();
         // Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
         // m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
 
         // MoveCamera();
+    }
+
+    private void Turn()
+    {
+        // Debug.Log("Camera x:" + m_mainCamera.rotation.eulerAngles.x + " y:" + m_mainCamera.rotation.eulerAngles.y + " z:" + m_mainCamera.rotation.eulerAngles.z);
+
+        // Adjust the rotation of the car based on the player's AR camera movement.
+        // Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
+
+        // if (playerDirection.sqrMagnitude > 0.0f)
+        // {
+        // m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
+        // }
+        //m_Rigidbody.MoveRotation(Quaternion.Slerp(m_mainCamera.rotation, Quaternion.LookRotation(m_mainCamera.forward, Vector3.up), 1f));
+        // Vector3 rot = transform.InverseTransformDirection(m_mainCamera.forward);
+
+        // m_hitCube.transform.rotation = Quaternion.Euler(m_mainCamera.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, m_mainCamera.rotation.eulerAngles.z);
+
+        // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
     }
 
     private void MoveCamera()

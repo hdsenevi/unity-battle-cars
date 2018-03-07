@@ -9,6 +9,8 @@ public class ARManager : MonoBehaviour
     public ArUiManager arUiManager;
     [HideInInspector]
     public float gameboardScaleCoef = 1f;
+    public UnityPointCloudExample pointCloudExample;
+    public PointCloudParticleExample pointCloudParticleExample;
 
     private GameObject m_debugPlaneGoRef;
 
@@ -30,7 +32,26 @@ public class ARManager : MonoBehaviour
             {
                 debugGo.GetComponentInChildren<MeshRenderer>().enabled = false;
             }
+
+            // if (pointCloudExample)
+            //     pointCloudExample.enabled = false;
+
+            // if (pointCloudParticleExample)
+            //     pointCloudParticleExample.enabled = false;
+
+            // StartCoroutine(CleanUpPointCloud());
         }
+    }
+
+    private IEnumerator CleanUpPointCloud()
+    {
+        yield return new WaitForFixedUpdate();
+        GameObject[] pointCloud = GameObject.FindGameObjectsWithTag("PointCloudParticle");
+        foreach (GameObject pointGo in pointCloud)
+        {
+            DestroyImmediate(pointGo);
+        }
+
     }
 
     public void AdjustGameboard(float scaleMultiplier, float rotation)
@@ -56,5 +77,11 @@ public class ARManager : MonoBehaviour
         {
             go.GetComponentInChildren<MeshRenderer>().enabled = true;
         }
+
+        if (pointCloudExample)
+            pointCloudExample.enabled = true;
+
+        if (pointCloudParticleExample)
+            pointCloudParticleExample.enabled = true;
     }
 }
