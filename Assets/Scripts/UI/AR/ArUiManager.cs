@@ -6,8 +6,9 @@ public class ArUiManager : MonoBehaviour
 {
     public GameObject MenuBtn;
     public GameObject OptionsPanel;
-    public GameObject TouchControls;
+    // [HideInInspector]
     public float gameboardScaleSetting = 1f;
+    // [HideInInspector]
     public float gameboardRotateSetting = 0f;
     public ARManager aRManager;
 
@@ -15,14 +16,12 @@ public class ArUiManager : MonoBehaviour
     {
         OptionsPanel.SetActive(true);
         MenuBtn.SetActive(false);
-        TouchControls.SetActive(false);
     }
 
     public void OptionsPanelBtnPressed()
     {
         OptionsPanel.SetActive(false);
         MenuBtn.SetActive(true);
-        TouchControls.SetActive(true);
     }
 
     public void ScaleGameBoard(float sliderVlaue)

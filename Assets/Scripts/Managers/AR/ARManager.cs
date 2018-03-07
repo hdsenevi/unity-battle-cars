@@ -40,7 +40,6 @@ public class ARManager : MonoBehaviour
 
         float size = Mathf.Max(m_debugPlaneGoRef.transform.localScale.x, m_debugPlaneGoRef.transform.localScale.z);
         gameboardScaleCoef = size * scaleMultiplier;
-        Debug.Log("AdjustGameboard " + gameboardScaleCoef);
         arRoot.localScale = new Vector3(gameboardScaleCoef, gameboardScaleCoef, gameboardScaleCoef);
 
         if (!Mathf.Approximately(rotation, 0f))

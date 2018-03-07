@@ -116,43 +116,17 @@ public class MultiplayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        // Move and turn the tank.
-        // Move();
-        // Turn();
-
+        // Move and turn the car.
         float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
         float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
 
-        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10 * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
+        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
-        Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
+        // Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
+        // m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
 
-        MoveCamera();
-    }
-
-    private void Move()
-    {
-        // Adjust the position of the car based on the player's input.
-        Vector3 movement = (m_CameraRight * -m_MoveInputValue.z + m_CameraForward * -m_MoveInputValue.x) * m_Speed * Time.deltaTime;
-
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
-    }
-
-    private void Turn()
-    {
-        // Adjust the rotation of the tank based on the player's input.
-        Vector3 playerDirection = (m_CameraRight * -m_TurnInputValue.z + m_CameraForward * -m_TurnInputValue.x) * m_TurnSpeed * Time.deltaTime;
-
-        if (playerDirection.sqrMagnitude > 0.0f)
-        {
-            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
-        }
-
-        // float turn = (m_TurnInputValue.x + m_TurnInputValue.z) * m_TurnSpeed * Time.deltaTime;
-        // Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
-        // m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
+        // MoveCamera();
     }
 
     private void MoveCamera()
