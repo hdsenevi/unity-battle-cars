@@ -143,7 +143,7 @@ public class MultiplayerMovement : NetworkBehaviour
         Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
-        // Turn();
+        Turn();
 
         // Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
         // m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
@@ -156,11 +156,11 @@ public class MultiplayerMovement : NetworkBehaviour
         // Debug.Log("Camera x:" + m_mainCamera.rotation.eulerAngles.x + " y:" + m_mainCamera.rotation.eulerAngles.y + " z:" + m_mainCamera.rotation.eulerAngles.z);
 
         // Adjust the rotation of the car based on the player's AR camera movement.
-        Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
+        // Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
 
         // if (playerDirection.sqrMagnitude > 0.0f)
         // {
-        m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
+        // m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
         // }
         //m_Rigidbody.MoveRotation(Quaternion.Slerp(m_mainCamera.rotation, Quaternion.LookRotation(m_mainCamera.forward, Vector3.up), 1f));
         // Vector3 rot = transform.InverseTransformDirection(m_mainCamera.forward);
@@ -168,6 +168,11 @@ public class MultiplayerMovement : NetworkBehaviour
         // m_hitCube.transform.rotation = Quaternion.Euler(m_mainCamera.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, m_mainCamera.rotation.eulerAngles.z);
 
         // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+        // float turn = m_mainCamera.rotation.eulerAngles.y * m_TurnSpeed * Time.deltaTime;
+
+        Quaternion turnRotation = Quaternion.Euler(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
+        m_Rigidbody.MoveRotation(turnRotation);
     }
 
     private void MoveCamera()

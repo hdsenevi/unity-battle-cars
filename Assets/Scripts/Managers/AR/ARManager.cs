@@ -53,7 +53,6 @@ public class ARManager : MonoBehaviour
 
             // if (pointCloudParticleExample)
             //     pointCloudParticleExample.enabled = false;
-            State = ArState.PLANE_DETECTED;
 
             StartCoroutine(EnablePlayer());
         }
@@ -63,6 +62,9 @@ public class ARManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         m_multiplayerMovement.EnableRigidbody(true);
+
+        yield return new WaitForFixedUpdate();
+        State = ArState.PLANE_DETECTED;
     }
 
     private IEnumerator CleanUpPointCloud()
