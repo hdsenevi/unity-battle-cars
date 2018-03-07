@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 114833949518098078}
   - component: {fileID: 114104509193247064}
   m_Layer: 0
-  m_Name: Shell
+  m_Name: Shell_BeforeNetworking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ Transform:
   m_GameObject: {fileID: 1419316436995404}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.06319443, y: 2.23, z: 1.6180441}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4226668549353028}
   m_Father: {fileID: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_MaxDamage: 100
   m_ExplosionForce: 1000
   m_MaxLifeTime: 2
-  m_ExplosionRadius: 0.5
+  m_ExplosionRadius: 5
 --- !u!114 &114104509193247064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -390,22 +390,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 149
-    i1: 106
-    i2: 113
-    i3: 172
-    i4: 182
-    i5: 111
-    i6: 100
-    i7: 223
-    i8: 104
-    i9: 233
-    i10: 232
-    i11: 25
-    i12: 131
-    i13: 127
-    i14: 57
-    i15: 0
+    i0: 48
+    i1: 35
+    i2: 201
+    i3: 181
+    i4: 154
+    i5: 132
+    i6: 84
+    i7: 192
+    i8: 202
+    i9: 118
+    i10: 10
+    i11: 17
+    i12: 171
+    i13: 200
+    i14: 175
+    i15: 101
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!136 &136799094977779278

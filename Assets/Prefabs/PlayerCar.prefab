@@ -594,7 +594,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357165000052370}
   m_LocalRotation: {x: 0.08715596, y: -0, z: -0, w: -0.9961947}
-  m_LocalPosition: {x: 0, y: 1, z: 1.35}
+  m_LocalPosition: {x: 0, y: 1.318, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4763533469856858}
@@ -1523,8 +1523,8 @@ MonoBehaviour:
   m_ShootingAudio: {fileID: 82348809742934150}
   m_ChargingClip: {fileID: 8300000, guid: c17f124fcdc0f5446a72f793898bd74b, type: 3}
   m_FireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
-  m_MinLaunchForce: 15
-  m_MaxLaunchForce: 30
+  m_MinLaunchForce: 1.5
+  m_MaxLaunchForce: 3
   m_MaxChargeTime: 0.75
 --- !u!114 &114945542213241796
 MonoBehaviour:

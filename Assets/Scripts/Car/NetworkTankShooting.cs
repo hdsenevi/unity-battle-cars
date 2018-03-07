@@ -32,7 +32,7 @@ public class NetworkTankShooting : NetworkBehaviour
 
     private void Start()
     {
-        m_FireButton = "Fire" + (m_PlayerNumber == 1 ? m_PlayerNumber : 2);
+        m_FireButton = "Fire";// + (m_PlayerNumber == 1 ? m_PlayerNumber : 2);
 
         m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
     }
