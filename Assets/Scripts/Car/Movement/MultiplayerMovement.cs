@@ -29,6 +29,8 @@ public class MultiplayerMovement : NetworkBehaviour
     private Vector3 m_CameraForward;
     private Vector3 m_cameraOffset;
     private Transform m_mainCamera;
+    private ARManager m_arManager;
+
     private void OnEnable()
     {
         if (m_Rigidbody)
@@ -57,6 +59,10 @@ public class MultiplayerMovement : NetworkBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
         m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
+
+        m_arManager = GameObject.FindObjectOfType<ARManager>();
+        if (!m_arManager)
+            Debug.LogError("Ar Manager not found. This is a problem");
 
         m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
         m_mainCamera = Camera.main.transform;
@@ -114,10 +120,10 @@ public class MultiplayerMovement : NetworkBehaviour
         // Move();
         // Turn();
 
-        float turnAmount = CrossPlatformInputManager.GetAxis(m_MovementAxisNameX);
-        float moveAmount = CrossPlatformInputManager.GetAxis(m_MovementAxisNameY);
+        float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
+        float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
 
-        Vector3 deltaTranslation = transform.position + transform.forward * m_Speed * moveAmount * Time.deltaTime;
+        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10 * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
         Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);

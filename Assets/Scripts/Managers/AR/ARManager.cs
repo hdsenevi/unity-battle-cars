@@ -7,6 +7,8 @@ public class ARManager : MonoBehaviour
     public Transform arRoot;
     public Transform levelArt;
     public ArUiManager arUiManager;
+    [HideInInspector]
+    public float gameboardScaleCoef = 1f;
 
     private GameObject m_debugPlaneGoRef;
 
@@ -21,7 +23,7 @@ public class ARManager : MonoBehaviour
             arRoot.position = m_debugPlaneGoRef.transform.position;
             arRoot.rotation = m_debugPlaneGoRef.transform.rotation;
             float size = Mathf.Max(m_debugPlaneGoRef.transform.localScale.x, m_debugPlaneGoRef.transform.localScale.z);
-            size *= arUiManager.gameboardScaleSetting;
+            gameboardScaleCoef = size * arUiManager.gameboardScaleSetting;
             arRoot.localScale = new Vector3(size, size, size);
 
             foreach (GameObject debugGo in debugPlanes)
@@ -37,9 +39,12 @@ public class ARManager : MonoBehaviour
             return;
 
         float size = Mathf.Max(m_debugPlaneGoRef.transform.localScale.x, m_debugPlaneGoRef.transform.localScale.z);
-        size *= scaleMultiplier;
-        arRoot.localScale = new Vector3(size, size, size);
-        arRoot.Rotate(Vector3.up, rotation);
+        gameboardScaleCoef = size * scaleMultiplier;
+        Debug.Log("AdjustGameboard " + gameboardScaleCoef);
+        arRoot.localScale = new Vector3(gameboardScaleCoef, gameboardScaleCoef, gameboardScaleCoef);
+
+        if (!Mathf.Approximately(rotation, 0f))
+            arRoot.Rotate(Vector3.up, rotation);
     }
 
     public void DisplayDebugPlanes()

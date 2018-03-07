@@ -7,8 +7,8 @@ public class ArUiManager : MonoBehaviour
     public GameObject MenuBtn;
     public GameObject OptionsPanel;
     public GameObject TouchControls;
-    public float gameboardScaleSetting;
-    public float gameboardRotateSetting;
+    public float gameboardScaleSetting = 1f;
+    public float gameboardRotateSetting = 0f;
     public ARManager aRManager;
 
     public void MenuBtnPressed()
@@ -22,20 +22,19 @@ public class ArUiManager : MonoBehaviour
     {
         OptionsPanel.SetActive(false);
         MenuBtn.SetActive(true);
-        // TouchControls.SetActive(true);
+        TouchControls.SetActive(true);
     }
 
     public void ScaleGameBoard(float sliderVlaue)
     {
-        Debug.Log("ScaleGameBoard :" + sliderVlaue);
         gameboardScaleSetting = sliderVlaue;
-        aRManager.AdjustGameboard(gameboardScaleSetting, gameboardRotateSetting);
+        Debug.Log(gameboardScaleSetting);
+        aRManager.AdjustGameboard(gameboardScaleSetting, 0f);
     }
 
     public void RotateGameBoard(float sliderVlaue)
     {
-        Debug.Log("RotateGameBoard :" + sliderVlaue);
+        aRManager.AdjustGameboard(gameboardScaleSetting, gameboardRotateSetting - sliderVlaue);
         gameboardRotateSetting = sliderVlaue;
-        aRManager.AdjustGameboard(gameboardScaleSetting, gameboardRotateSetting);
     }
 }
