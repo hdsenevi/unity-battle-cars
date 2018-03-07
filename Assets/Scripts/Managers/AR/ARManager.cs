@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ARManager : MonoBehaviour
 {
+    public enum ArState
+    {
+        INIT,
+        PLANE_DETECTED,
+    }
+
     public Transform arRoot;
     public Transform levelArt;
     public ArUiManager arUiManager;
@@ -11,8 +18,16 @@ public class ARManager : MonoBehaviour
     public float gameboardScaleCoef = 1f;
     public UnityPointCloudExample pointCloudExample;
     public PointCloudParticleExample pointCloudParticleExample;
+    [HideInInspector]
+    public MultiplayerMovement m_multiplayerMovement;
+    public ArState State;
 
     private GameObject m_debugPlaneGoRef;
+
+    void Awake()
+    {
+        State = ArState.INIT;
+    }
 
     public void FitToSurface()
     {
@@ -38,9 +53,16 @@ public class ARManager : MonoBehaviour
 
             // if (pointCloudParticleExample)
             //     pointCloudParticleExample.enabled = false;
+            State = ArState.PLANE_DETECTED;
 
-            // StartCoroutine(CleanUpPointCloud());
+            StartCoroutine(EnablePlayer());
         }
+    }
+
+    private IEnumerator EnablePlayer()
+    {
+        yield return new WaitForSeconds(3);
+        m_multiplayerMovement.EnableRigidbody(true);
     }
 
     private IEnumerator CleanUpPointCloud()

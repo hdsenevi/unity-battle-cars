@@ -47,6 +47,12 @@ public class MultiplayerMovement : NetworkBehaviour
             m_Rigidbody.isKinematic = true;
     }
 
+    public void EnableRigidbody(bool enable)
+    {
+        m_Rigidbody.detectCollisions = enable;
+        m_Rigidbody.isKinematic = !enable;
+        transform.rotation = Quaternion.identity;
+    }
 
     private void Start()
     {
@@ -58,16 +64,19 @@ public class MultiplayerMovement : NetworkBehaviour
         }
 
         m_Rigidbody = GetComponent<Rigidbody>();
+        EnableRigidbody(false);
         m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
         m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
 
         m_arManager = GameObject.FindObjectOfType<ARManager>();
         if (!m_arManager)
             Debug.LogError("Ar Manager not found. This is a problem");
+        else
+            m_arManager.m_multiplayerMovement = this;
 
-        m_hitCube = GameObject.FindGameObjectWithTag("HitCube");
-        if (!m_hitCube)
-            Debug.LogError("Hit Cube is not found. This is a problem");
+        // m_hitCube = GameObject.FindGameObjectWithTag("HitCube");
+        // if (!m_hitCube)
+        //     Debug.LogError("Hit Cube is not found. This is a problem");
 
         m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
         m_mainCamera = Camera.main.transform;
@@ -121,6 +130,12 @@ public class MultiplayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (!m_arManager)
+            return;
+
+        if (m_arManager.State != ARManager.ArState.PLANE_DETECTED)
+            return;
+
         // Move and turn the car.
         // float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
         float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
@@ -128,7 +143,8 @@ public class MultiplayerMovement : NetworkBehaviour
         Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
-        Turn();
+        // Turn();
+
         // Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
         // m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
 
@@ -140,11 +156,11 @@ public class MultiplayerMovement : NetworkBehaviour
         // Debug.Log("Camera x:" + m_mainCamera.rotation.eulerAngles.x + " y:" + m_mainCamera.rotation.eulerAngles.y + " z:" + m_mainCamera.rotation.eulerAngles.z);
 
         // Adjust the rotation of the car based on the player's AR camera movement.
-        // Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
+        Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
 
         // if (playerDirection.sqrMagnitude > 0.0f)
         // {
-        // m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
+        m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
         // }
         //m_Rigidbody.MoveRotation(Quaternion.Slerp(m_mainCamera.rotation, Quaternion.LookRotation(m_mainCamera.forward, Vector3.up), 1f));
         // Vector3 rot = transform.InverseTransformDirection(m_mainCamera.forward);
