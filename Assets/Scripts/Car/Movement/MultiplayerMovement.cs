@@ -140,7 +140,7 @@ public class MultiplayerMovement : NetworkBehaviour
         // float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
         float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
 
-        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (10f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
+        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (20f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
         Turn();
