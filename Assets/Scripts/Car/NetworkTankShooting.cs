@@ -12,9 +12,9 @@ public class NetworkTankShooting : NetworkBehaviour
     public AudioSource m_ShootingAudio;
     public AudioClip m_ChargingClip;
     public AudioClip m_FireClip;
-    public float m_MinLaunchForce = 15f;
-    public float m_MaxLaunchForce = 30f;
-    public float m_MaxChargeTime = 0.75f;
+    private float m_MinLaunchForce = 15f / 100f;
+    private float m_MaxLaunchForce = 30f / 100f;
+    private float m_MaxChargeTime = 0.75f;
 
     private string m_FireButton;
     private float m_CurrentLaunchForce;
@@ -98,6 +98,8 @@ public class NetworkTankShooting : NetworkBehaviour
 
             // Reset the launch force.  This is a precaution in case of missing button events.
             m_CurrentLaunchForce = m_MinLaunchForce;
+            m_CurrentLaunchForce = 0.0f;
+            Debug.Log(" *** m_CurrentLaunchForce :" + m_CurrentLaunchForce);
         }
 
     }

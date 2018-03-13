@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/AR.unity
     guid: 075a9e86fecc447b88531cd2f1abf782
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu_Network.unity
     guid: 1e8425032096a475e8ac769922207d81
   - enabled: 1
