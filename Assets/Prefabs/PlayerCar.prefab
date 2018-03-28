@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 114135617710147178}
   - component: {fileID: 114230974144547638}
   - component: {fileID: 114115505040548764}
+  - component: {fileID: 114083859300525592}
   m_Layer: 9
   m_Name: PlayerCar
   m_TagString: Player
@@ -285,7 +286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1817934957602240
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1914165256430306
 GameObject:
   m_ObjectHideFlags: 1
@@ -593,7 +594,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357165000052370}
   m_LocalRotation: {x: 0.08715596, y: -0, z: -0, w: -0.9961947}
-  m_LocalPosition: {x: 0, y: 1, z: 1.35}
+  m_LocalPosition: {x: 0, y: 1.318, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4763533469856858}
@@ -955,9 +956,9 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
@@ -1173,6 +1174,17 @@ MonoBehaviour:
   m_FullHealthColor: {r: 0, g: 1, b: 0, a: 1}
   m_ZeroHealthColor: {r: 1, g: 0, b: 0, a: 1}
   m_ExplosionPrefab: {fileID: 151086, guid: ee49a9a8678ecf8468eb488e1ac8d42b, type: 2}
+--- !u!114 &114083859300525592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1286973114996126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92cc23615f11d4f318603c42f21ad93c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114085594278273998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1226,22 +1238,22 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 125
-    i1: 117
-    i2: 15
-    i3: 4
-    i4: 105
-    i5: 129
-    i6: 36
-    i7: 49
-    i8: 122
-    i9: 228
-    i10: 142
-    i11: 82
-    i12: 162
-    i13: 133
-    i14: 75
-    i15: 46
+    i0: 64
+    i1: 142
+    i2: 20
+    i3: 3
+    i4: 145
+    i5: 103
+    i6: 228
+    i7: 61
+    i8: 250
+    i9: 40
+    i10: 124
+    i11: 125
+    i12: 164
+    i13: 13
+    i14: 126
+    i15: 85
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
 --- !u!114 &114168515436375452
@@ -1274,7 +1286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 3
-  m_SendInterval: 0.1
+  m_SendInterval: 0.0625
   m_SyncRotationAxis: 2
   m_RotationSyncCompression: 2
   m_SyncSpin: 0
@@ -1392,7 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerNumber: 1
-  m_Speed: 12
+  m_Speed: 2.5
   m_TurnSpeed: 180
   m_MovementAudio: {fileID: 82348809742934150}
   m_EngineIdling: {fileID: 8300000, guid: 4932ab25b84dd7649b80af68a9660ddc, type: 3}
@@ -1511,8 +1523,8 @@ MonoBehaviour:
   m_ShootingAudio: {fileID: 82348809742934150}
   m_ChargingClip: {fileID: 8300000, guid: c17f124fcdc0f5446a72f793898bd74b, type: 3}
   m_FireClip: {fileID: 8300000, guid: 672a9941361ad494a99fba36759eca80, type: 3}
-  m_MinLaunchForce: 15
-  m_MaxLaunchForce: 30
+  m_MinLaunchForce: 1.5
+  m_MaxLaunchForce: 3
   m_MaxChargeTime: 0.75
 --- !u!114 &114945542213241796
 MonoBehaviour:

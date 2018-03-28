@@ -17,10 +17,10 @@ public class MultiplayerMovement : NetworkBehaviour
     [SerializeField]
     float cameraHeight = 16f;
 
-    private string m_MovementAxisNameX;
-    private string m_MovementAxisNameY;
-    private string m_TurnAxisNameX;
-    private string m_TurnAxisNameY;
+    // private string m_MovementAxisNameX;
+    // private string m_MovementAxisNameY;
+    // private string m_TurnAxisNameX;
+    // private string m_TurnAxisNameY;
     private Rigidbody m_Rigidbody;
     private float m_OriginalPitch;
     private Vector3 m_MoveInputValue;
@@ -29,6 +29,9 @@ public class MultiplayerMovement : NetworkBehaviour
     private Vector3 m_CameraForward;
     private Vector3 m_cameraOffset;
     private Transform m_mainCamera;
+    private ARManager m_arManager;
+    private GameObject m_hitCube;
+
     private void OnEnable()
     {
         if (m_Rigidbody)
@@ -44,6 +47,12 @@ public class MultiplayerMovement : NetworkBehaviour
             m_Rigidbody.isKinematic = true;
     }
 
+    public void EnableRigidbody(bool enable)
+    {
+        m_Rigidbody.detectCollisions = enable;
+        m_Rigidbody.isKinematic = !enable;
+        transform.rotation = Quaternion.identity;
+    }
 
     private void Start()
     {
@@ -55,16 +64,27 @@ public class MultiplayerMovement : NetworkBehaviour
         }
 
         m_Rigidbody = GetComponent<Rigidbody>();
+        EnableRigidbody(false);
         m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
         m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
+
+        m_arManager = GameObject.FindObjectOfType<ARManager>();
+        if (!m_arManager)
+            Debug.LogError("Ar Manager not found. This is a problem");
+        else
+            m_arManager.m_multiplayerMovement = this;
+
+        // m_hitCube = GameObject.FindGameObjectWithTag("HitCube");
+        // if (!m_hitCube)
+        //     Debug.LogError("Hit Cube is not found. This is a problem");
 
         m_cameraOffset = new Vector3(0f, cameraHeight, -cameraDisance);
         m_mainCamera = Camera.main.transform;
 
-        m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
-        m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
-        m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
-        m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
+        // m_MovementAxisNameX = "LHorizontal" + m_PlayerNumber;
+        // m_MovementAxisNameY = "LVertical" + m_PlayerNumber;
+        // m_TurnAxisNameX = "RHorizontal" + m_PlayerNumber;
+        // m_TurnAxisNameY = "RVertical" + m_PlayerNumber;
 
         m_OriginalPitch = m_MovementAudio.pitch;
 
@@ -74,11 +94,11 @@ public class MultiplayerMovement : NetworkBehaviour
     private void Update()
     {
         // Store the player's input and make sure the audio for the engine is playing.
-        m_MoveInputValue.x = Input.GetAxis(m_MovementAxisNameX);
-        m_MoveInputValue.z = Input.GetAxis(m_MovementAxisNameY);
+        // m_MoveInputValue.x = Input.GetAxis(m_MovementAxisNameX);
+        // m_MoveInputValue.z = Input.GetAxis(m_MovementAxisNameY);
 
-        m_TurnInputValue.x = Input.GetAxis(m_TurnAxisNameX);
-        m_TurnInputValue.z = Input.GetAxis(m_TurnAxisNameY);
+        // m_TurnInputValue.x = Input.GetAxis(m_TurnAxisNameX);
+        // m_TurnInputValue.z = Input.GetAxis(m_TurnAxisNameY);
 
         EngineAudio();
     }
@@ -110,43 +130,49 @@ public class MultiplayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        // Move and turn the tank.
-        // Move();
-        // Turn();
+        if (!m_arManager)
+            return;
 
-        float turnAmount = CrossPlatformInputManager.GetAxis(m_MovementAxisNameX);
-        float moveAmount = CrossPlatformInputManager.GetAxis(m_MovementAxisNameY);
+        if (m_arManager.State != ARManager.ArState.PLANE_DETECTED)
+            return;
 
-        Vector3 deltaTranslation = transform.position + transform.forward * m_Speed * moveAmount * Time.deltaTime;
+        // Move and turn the car.
+        // float turnAmount = CrossPlatformInputManager.GetAxis("Horizontal");
+        float moveAmount = CrossPlatformInputManager.GetAxis("Vertical");
+
+        Vector3 deltaTranslation = transform.position + transform.forward * (m_Speed / (20f * m_arManager.gameboardScaleCoef)) * moveAmount * Time.deltaTime;
         m_Rigidbody.MovePosition(deltaTranslation);
 
-        Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
+        Turn();
 
-        MoveCamera();
-    }
+        // Quaternion deltaRotation = Quaternion.Euler(m_TurnSpeed * new Vector3(0, turnAmount, 0) * Time.deltaTime);
+        // m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
 
-    private void Move()
-    {
-        // Adjust the position of the car based on the player's input.
-        Vector3 movement = (m_CameraRight * -m_MoveInputValue.z + m_CameraForward * -m_MoveInputValue.x) * m_Speed * Time.deltaTime;
-
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        // MoveCamera();
     }
 
     private void Turn()
     {
-        // Adjust the rotation of the tank based on the player's input.
-        Vector3 playerDirection = (m_CameraRight * -m_TurnInputValue.z + m_CameraForward * -m_TurnInputValue.x) * m_TurnSpeed * Time.deltaTime;
+        // Debug.Log("Camera x:" + m_mainCamera.rotation.eulerAngles.x + " y:" + m_mainCamera.rotation.eulerAngles.y + " z:" + m_mainCamera.rotation.eulerAngles.z);
 
-        if (playerDirection.sqrMagnitude > 0.0f)
-        {
-            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
-        }
+        // Adjust the rotation of the car based on the player's AR camera movement.
+        // Vector3 playerDirection = new Vector3(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
 
-        // float turn = (m_TurnInputValue.x + m_TurnInputValue.z) * m_TurnSpeed * Time.deltaTime;
-        // Quaternion turnRotation = Quaternion.Euler (0f, turn, 0f);
-        // m_Rigidbody.MoveRotation (m_Rigidbody.rotation * turnRotation);
+        // if (playerDirection.sqrMagnitude > 0.0f)
+        // {
+        // m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
+        // }
+        //m_Rigidbody.MoveRotation(Quaternion.Slerp(m_mainCamera.rotation, Quaternion.LookRotation(m_mainCamera.forward, Vector3.up), 1f));
+        // Vector3 rot = transform.InverseTransformDirection(m_mainCamera.forward);
+
+        // m_hitCube.transform.rotation = Quaternion.Euler(m_mainCamera.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, m_mainCamera.rotation.eulerAngles.z);
+
+        // transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, m_mainCamera.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+        // float turn = m_mainCamera.rotation.eulerAngles.y * m_TurnSpeed * Time.deltaTime;
+
+        Quaternion turnRotation = Quaternion.Euler(0f, m_mainCamera.rotation.eulerAngles.y, 0f);
+        m_Rigidbody.MoveRotation(turnRotation);
     }
 
     private void MoveCamera()
