@@ -703,7 +703,7 @@ MonoBehaviour:
   m_TankPrefab: {fileID: 1286973114996126, guid: 7d750f04698124317ae48e52a2854b2e,
     type: 2}
   m_TankPrefabs:
-  - {fileID: 1286973114996126, guid: 7d750f04698124317ae48e52a2854b2e, type: 2}
+  - {fileID: 1286973114996126, guid: 408e14039167e43dfa287c7da40d7e55, type: 2}
   - {fileID: 1110607705612350, guid: 78fec87bda4a34b52a97439cf003dfe7, type: 2}
   - {fileID: 1172099922031580, guid: 57432760f89d745c0ba4b80748fa79ca, type: 2}
   m_Tanks:

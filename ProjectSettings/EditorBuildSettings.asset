@@ -5,22 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 629343feb81f64b048e54f7bcff8d5b4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main-Multiplayer.unity
     guid: e5de9fd6a1e5c4e55848c19d209450fb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main-Single.unity
     guid: 33dadc68a17c14e1b807486429dccba7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MapSelect.unity
     guid: 9d6afeebf95ff4c42b985eeb409694f7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level_Snow.unity
     guid: 93324673e13584f1ea7a11fd5e1dfcf7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level_Desert.unity
     guid: 4c2534c1dc5c641c786afcad67c4495b
   - enabled: 0
@@ -32,9 +32,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainMenu_Network.unity
     guid: 1e8425032096a475e8ac769922207d81
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testbed_Network_Lobby.unity
     guid: e3f79260cb2a9466b9d2b65f55807082
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Testbed_Network_MatchMaking_AR.unity
     guid: 558fa28e5aa3540fa944b84b2ecf23b0
