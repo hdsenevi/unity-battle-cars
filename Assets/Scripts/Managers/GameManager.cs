@@ -9,6 +9,7 @@ public enum GameMode
 {
     LOCAL_MULTIPLAYER,
     SINGLE_PLAYER,
+    NETWORK_MULTIPLAYER,
 }
 public class GameManager : MonoBehaviour
 {
@@ -36,7 +37,6 @@ public class GameManager : MonoBehaviour
 
         SpawnAllTanks();
         SetCameraTargets();
-
         StartCoroutine(GameLoop());
     }
 

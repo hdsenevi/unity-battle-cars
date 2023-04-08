@@ -23,3 +23,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level_Desert.unity
     guid: 4c2534c1dc5c641c786afcad67c4495b
+  - enabled: 0
+    path: Assets/Scenes/Testbed_Network_LAN.unity
+    guid: b84ec1c8ca0aa43ccbea0d72d72710dd
+  - enabled: 0
+    path: Assets/Scenes/AR.unity
+    guid: 075a9e86fecc447b88531cd2f1abf782
+  - enabled: 0
+    path: Assets/Scenes/MainMenu_Network.unity
+    guid: 1e8425032096a475e8ac769922207d81
+  - enabled: 0
+    path: Assets/Scenes/Testbed_Network_Lobby.unity
+    guid: e3f79260cb2a9466b9d2b65f55807082
+  - enabled: 0
+    path: Assets/Scenes/Testbed_Network_MatchMaking_AR.unity
+    guid: 558fa28e5aa3540fa944b84b2ecf23b0
+  m_configObjects: {}
