@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using PluggableAI;
@@ -14,20 +14,20 @@ public class TankManager
     [HideInInspector] public int m_Wins;
 
 
-    private TwinStickMovement m_Movement;
-    private TankShooting m_Shooting;
-    private GameObject m_CanvasGameObject;
-    private StateController m_StateController;				// Reference to the StateController for AI tanks
+    private TwinStickMovement movement;
+    private TankShooting shooting;
+    private InputHandler inputHandler;
+    private GameObject canvasGameObject;
+    private StateController stateController;
 
     public void SetupAI(List<Transform> wayPointList)
     {
-        m_StateController = m_Instance.GetComponent<StateController>();
-        m_StateController.SetupAI(true, wayPointList);
+        stateController = m_Instance.GetComponent<StateController>();
+        stateController.SetupAI(true, wayPointList);
 
-        m_Shooting = m_Instance.GetComponent<TankShooting>();
-        m_Shooting.m_PlayerNumber = m_PlayerNumber;
+        shooting = m_Instance.GetComponent<TankShooting>();
 
-        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
+        canvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
         PaintCar();
@@ -35,17 +35,13 @@ public class TankManager
 
     public void SetupPlayerTank()
     {
-        // Get references to the components.
+        movement = m_Instance.GetComponent<TwinStickMovement>();
+        shooting = m_Instance.GetComponent<TankShooting>();
+        inputHandler = m_Instance.GetComponent<InputHandler>();
+        canvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
-        m_Movement = m_Instance.GetComponent<TwinStickMovement>();
-        m_Shooting = m_Instance.GetComponent<TankShooting>();
-        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
+        inputHandler.Initialize(m_PlayerNumber);
 
-        // Set the player numbers to be consistent across the scripts.
-        m_Movement.m_PlayerNumber = m_PlayerNumber;
-        m_Shooting.m_PlayerNumber = m_PlayerNumber;
-
-        // Create a string using the correct color that says 'PLAYER 1' etc based on the tank's color and the player's number.
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
         PaintCar();
@@ -53,29 +49,35 @@ public class TankManager
 
     public void DisableControl()
     {
-        if (m_Movement != null)
-            m_Movement.enabled = false;
+        if (movement != null)
+            movement.enabled = false;
 
-        if (m_StateController != null)
-            m_StateController.enabled = false;
+        if (stateController != null)
+            stateController.enabled = false;
 
-        m_Shooting.enabled = false;
+        if (inputHandler != null)
+            inputHandler.enabled = false;
 
-        m_CanvasGameObject.SetActive(false);
+        shooting.enabled = false;
+
+        canvasGameObject.SetActive(false);
     }
 
 
     public void EnableControl()
     {
-        if (m_Movement != null)
-            m_Movement.enabled = true;
+        if (inputHandler != null)
+            inputHandler.enabled = true;
 
-        if (m_StateController != null)
-            m_StateController.enabled = true;
+        if (movement != null)
+            movement.enabled = true;
 
-        m_Shooting.enabled = true;
+        if (stateController != null)
+            stateController.enabled = true;
 
-        m_CanvasGameObject.SetActive(true);
+        shooting.enabled = true;
+
+        canvasGameObject.SetActive(true);
     }
 
 
@@ -90,7 +92,6 @@ public class TankManager
 
     private void PaintCar()
     {
-        // Get all of the renderers of the tank.
         CarPaint carPaint = m_Instance.GetComponentInChildren<CarPaint>();
         MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer>();
 
@@ -100,10 +101,8 @@ public class TankManager
         }
         else
         {
-            // Go through all the renderers...
             for (int i = 0; i < renderers.Length; i++)
             {
-                // ... set their material color to the color specific to this tank.
                 renderers[i].material.color = m_PlayerColor;
             }
         }
