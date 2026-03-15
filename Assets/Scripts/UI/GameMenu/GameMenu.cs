@@ -1,26 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
+    public InputActionAsset m_InputActions;
     public GameObject m_pauseMenuPanel;
     public GameObject m_messageText;
 
     private bool m_pauseMenuShowing = false;
+    private InputAction m_PauseAction;
 
-    // Use this for initialization
     void Start()
     {
         m_pauseMenuShowing = false;
         Time.timeScale = 1f;
+
+        var uiMap = m_InputActions.FindActionMap("UI");
+        m_PauseAction = uiMap.FindAction("Pause");
+        m_PauseAction.Enable();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (m_PauseAction.WasReleasedThisFrame())
         {
             m_pauseMenuShowing = !m_pauseMenuShowing;
 
@@ -31,7 +34,13 @@ public class GameMenu : MonoBehaviour
         }
     }
 
-	public void GotoMainMenu(){
-		SceneManager.LoadScene("MainMenu");
-	}
+    private void OnDestroy()
+    {
+        m_PauseAction?.Disable();
+    }
+
+    public void GotoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
