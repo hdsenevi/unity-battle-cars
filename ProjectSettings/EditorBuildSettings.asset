@@ -39,3 +39,4 @@ EditorBuildSettings:
     path: Assets/Scenes/Testbed_Network_MatchMaking_AR.unity
     guid: 558fa28e5aa3540fa944b84b2ecf23b0
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
