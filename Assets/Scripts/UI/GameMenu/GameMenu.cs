@@ -1,37 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameMenu : MonoBehaviour
 {
+    public InputActionAsset m_InputActions;
     public GameObject m_pauseMenuPanel;
     public GameObject m_messageText;
 
-    private bool m_pauseMenuShowing = false;
+    private bool pauseMenuShowing = false;
+    private InputAction pauseAction;
 
-    // Use this for initialization
     void Start()
     {
-        m_pauseMenuShowing = false;
+        pauseMenuShowing = false;
         Time.timeScale = 1f;
+
+        var uiMap = m_InputActions.FindActionMap("UI");
+        pauseAction = uiMap.FindAction("Pause");
+        pauseAction.Enable();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (pauseAction.WasReleasedThisFrame())
         {
-            m_pauseMenuShowing = !m_pauseMenuShowing;
+            pauseMenuShowing = !pauseMenuShowing;
 
-            m_pauseMenuPanel.SetActive(m_pauseMenuShowing);
-            m_messageText.SetActive(!m_pauseMenuShowing);
+            m_pauseMenuPanel.SetActive(pauseMenuShowing);
+            m_messageText.SetActive(!pauseMenuShowing);
 
-            Time.timeScale = m_pauseMenuShowing ? 0f : 1f;
+            Time.timeScale = pauseMenuShowing ? 0f : 1f;
         }
     }
 
-	public void GotoMainMenu(){
-		SceneManager.LoadScene("MainMenu");
-	}
+    private void OnDestroy()
+    {
+        pauseAction?.Disable();
+    }
+
+    public void GotoMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

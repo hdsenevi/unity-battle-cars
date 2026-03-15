@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Testbed_Network_MatchMaking_AR.unity
     guid: 558fa28e5aa3540fa944b84b2ecf23b0
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 8cb4f68f2174a44a08956cfa1fc3f628,
+      type: 3}
+  m_UseUCBPForAssetBundles: 0
