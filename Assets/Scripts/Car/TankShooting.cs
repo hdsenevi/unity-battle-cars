@@ -13,56 +13,56 @@ public class TankShooting : MonoBehaviour
     public float m_MaxLaunchForce = 30f;
     public float m_MaxChargeTime = 0.75f;
 
-    private InputHandler m_InputHandler;
-    private float m_CurrentLaunchForce;
-    private float m_ChargeSpeed;
-    private bool m_Fired;
+    private InputHandler inputHandler;
+    private float currentLaunchForce;
+    private float chargeSpeed;
+    private bool fired;
     private float nextFireTime;
 
 
     private void Awake()
     {
-        m_InputHandler = GetComponent<InputHandler>();
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void OnEnable()
     {
-        m_CurrentLaunchForce = m_MinLaunchForce;
+        currentLaunchForce = m_MinLaunchForce;
         m_AimSlider.value = m_MinLaunchForce;
     }
 
 
     private void Start()
     {
-        m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
+        chargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
     }
 
     private void Update()
     {
         m_AimSlider.value = m_MinLaunchForce;
 
-        if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+        if (currentLaunchForce >= m_MaxLaunchForce && !fired)
         {
-            m_CurrentLaunchForce = m_MaxLaunchForce;
-            Fire(m_CurrentLaunchForce, 1);
+            currentLaunchForce = m_MaxLaunchForce;
+            Fire(currentLaunchForce, 1);
         }
-        else if (m_InputHandler.FirePressed)
+        else if (inputHandler.FirePressed)
         {
-            m_Fired = false;
-            m_CurrentLaunchForce = m_MinLaunchForce;
+            fired = false;
+            currentLaunchForce = m_MinLaunchForce;
 
             m_ShootingAudio.clip = m_ChargingClip;
             m_ShootingAudio.Play();
         }
-        else if (m_InputHandler.FireHeld && !m_Fired)
+        else if (inputHandler.FireHeld && !fired)
         {
-            m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
+            currentLaunchForce += chargeSpeed * Time.deltaTime;
 
-            m_AimSlider.value = m_CurrentLaunchForce;
+            m_AimSlider.value = currentLaunchForce;
         }
-        else if (m_InputHandler.FireReleased && !m_Fired)
+        else if (inputHandler.FireReleased && !fired)
         {
-            Fire(m_CurrentLaunchForce, 1);
+            Fire(currentLaunchForce, 1);
         }
     }
 
@@ -72,17 +72,17 @@ public class TankShooting : MonoBehaviour
         if (Time.time > nextFireTime)
         {
             nextFireTime = Time.time + fireRate;
-            m_Fired = true;
+            fired = true;
 
             Rigidbody shellInstance =
                 Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
 
-            shellInstance.linearVelocity = m_CurrentLaunchForce * m_FireTransform.forward;
+            shellInstance.linearVelocity = currentLaunchForce * m_FireTransform.forward;
 
             m_ShootingAudio.clip = m_FireClip;
             m_ShootingAudio.Play();
 
-            m_CurrentLaunchForce = m_MinLaunchForce;
+            currentLaunchForce = m_MinLaunchForce;
         }
 
     }

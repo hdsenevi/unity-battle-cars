@@ -9,44 +9,44 @@ public class TankMovement : MonoBehaviour
     public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
 
-    private InputHandler m_InputHandler;
-    private Rigidbody m_Rigidbody;
-    private float m_MovementInputValue;
-    private float m_TurnInputValue;
-    private float m_OriginalPitch;
+    private InputHandler inputHandler;
+    private Rigidbody rigidbody;
+    private float movementInputValue;
+    private float turnInputValue;
+    private float originalPitch;
 
 
     private void Awake()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_InputHandler = GetComponent<InputHandler>();
+        rigidbody = GetComponent<Rigidbody>();
+        inputHandler = GetComponent<InputHandler>();
     }
 
 
     private void OnEnable ()
     {
-        m_Rigidbody.isKinematic = false;
-        m_MovementInputValue = 0f;
-        m_TurnInputValue = 0f;
+        rigidbody.isKinematic = false;
+        movementInputValue = 0f;
+        turnInputValue = 0f;
     }
 
 
     private void OnDisable ()
     {
-        m_Rigidbody.isKinematic = true;
+        rigidbody.isKinematic = true;
     }
 
 
     private void Start()
     {
-        m_OriginalPitch = m_MovementAudio.pitch;
+        originalPitch = m_MovementAudio.pitch;
     }
 
     private void Update()
     {
-        Vector2 moveInput = m_InputHandler.MoveInput;
-        m_MovementInputValue = -moveInput.y;
-        m_TurnInputValue = moveInput.x;
+        Vector2 moveInput = inputHandler.MoveInput;
+        movementInputValue = -moveInput.y;
+        turnInputValue = moveInput.x;
 
         EngineAudio();
     }
@@ -54,12 +54,12 @@ public class TankMovement : MonoBehaviour
 
     private void EngineAudio()
     {
-        if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
+        if (Mathf.Abs(movementInputValue) < 0.1f && Mathf.Abs(turnInputValue) < 0.1f)
         {
             if (m_MovementAudio.clip == m_EngineDriving)
             {
                 m_MovementAudio.clip = m_EngineIdling;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
+                m_MovementAudio.pitch = Random.Range(originalPitch - m_PitchRange, originalPitch + m_PitchRange);
                 m_MovementAudio.Play();
             }
         }
@@ -68,7 +68,7 @@ public class TankMovement : MonoBehaviour
             if (m_MovementAudio.clip == m_EngineIdling)
             {
                 m_MovementAudio.clip = m_EngineDriving;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
+                m_MovementAudio.pitch = Random.Range(originalPitch - m_PitchRange, originalPitch + m_PitchRange);
                 m_MovementAudio.Play();
             }
         }
@@ -84,17 +84,17 @@ public class TankMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+        Vector3 movement = transform.forward * movementInputValue * m_Speed * Time.deltaTime;
 
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        rigidbody.MovePosition(rigidbody.position + movement);
     }
 
 
     private void Turn()
     {
-        float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+        float turn = turnInputValue * m_TurnSpeed * Time.deltaTime;
 
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        rigidbody.MoveRotation(rigidbody.rotation * turnRotation);
     }
 }

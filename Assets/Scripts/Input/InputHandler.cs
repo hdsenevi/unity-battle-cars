@@ -12,10 +12,11 @@ public class InputHandler : MonoBehaviour
     public bool FireHeld { get; private set; }
     public bool FireReleased { get; private set; }
 
-    private InputActionMap m_ActionMap;
-    private InputAction m_MoveAction;
-    private InputAction m_TurnAction;
-    private InputAction m_FireAction;
+    private InputActionMap actionMap;
+    private InputAction moveAction;
+    private InputAction turnAction;
+    private InputAction fireAction;
+    private bool isCloned;
 
     public void Initialize(int playerNumber)
     {
@@ -28,29 +29,34 @@ public class InputHandler : MonoBehaviour
         if (m_InputActions == null)
             return;
 
-        m_ActionMap = m_InputActions.FindActionMap("Player" + m_PlayerNumber);
-        if (m_ActionMap == null)
+        if (!isCloned)
+        {
+            m_InputActions = Instantiate(m_InputActions);
+            isCloned = true;
+        }
+        actionMap = m_InputActions.FindActionMap("Player" + m_PlayerNumber);
+        if (actionMap == null)
         {
             Debug.LogError($"Action map 'Player{m_PlayerNumber}' not found in {m_InputActions.name}");
             return;
         }
 
-        m_MoveAction = m_ActionMap.FindAction("Move");
-        m_TurnAction = m_ActionMap.FindAction("Turn");
-        m_FireAction = m_ActionMap.FindAction("Fire");
+        moveAction = actionMap.FindAction("Move");
+        turnAction = actionMap.FindAction("Turn");
+        fireAction = actionMap.FindAction("Fire");
     }
 
     private void OnEnable()
     {
-        if (m_ActionMap == null)
+        if (actionMap == null)
             SetupActions();
 
-        m_ActionMap?.Enable();
+        actionMap?.Enable();
     }
 
     private void OnDisable()
     {
-        m_ActionMap?.Disable();
+        actionMap?.Disable();
         MoveInput = Vector2.zero;
         TurnInput = Vector2.zero;
         FirePressed = false;
@@ -58,16 +64,22 @@ public class InputHandler : MonoBehaviour
         FireReleased = false;
     }
 
+    private void OnDestroy()
+    {
+        if (isCloned && m_InputActions != null)
+            Destroy(m_InputActions);
+    }
+
     private void Update()
     {
-        if (m_ActionMap == null)
+        if (actionMap == null)
             return;
 
-        MoveInput = m_MoveAction.ReadValue<Vector2>();
-        TurnInput = m_TurnAction.ReadValue<Vector2>();
+        MoveInput = moveAction.ReadValue<Vector2>();
+        TurnInput = turnAction.ReadValue<Vector2>();
 
-        FirePressed = m_FireAction.WasPressedThisFrame();
-        FireHeld = m_FireAction.IsPressed();
-        FireReleased = m_FireAction.WasReleasedThisFrame();
+        FirePressed = fireAction.WasPressedThisFrame();
+        FireHeld = fireAction.IsPressed();
+        FireReleased = fireAction.WasReleasedThisFrame();
     }
 }

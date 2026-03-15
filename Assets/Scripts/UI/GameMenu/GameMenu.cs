@@ -8,35 +8,35 @@ public class GameMenu : MonoBehaviour
     public GameObject m_pauseMenuPanel;
     public GameObject m_messageText;
 
-    private bool m_pauseMenuShowing = false;
-    private InputAction m_PauseAction;
+    private bool pauseMenuShowing = false;
+    private InputAction pauseAction;
 
     void Start()
     {
-        m_pauseMenuShowing = false;
+        pauseMenuShowing = false;
         Time.timeScale = 1f;
 
         var uiMap = m_InputActions.FindActionMap("UI");
-        m_PauseAction = uiMap.FindAction("Pause");
-        m_PauseAction.Enable();
+        pauseAction = uiMap.FindAction("Pause");
+        pauseAction.Enable();
     }
 
     void Update()
     {
-        if (m_PauseAction.WasReleasedThisFrame())
+        if (pauseAction.WasReleasedThisFrame())
         {
-            m_pauseMenuShowing = !m_pauseMenuShowing;
+            pauseMenuShowing = !pauseMenuShowing;
 
-            m_pauseMenuPanel.SetActive(m_pauseMenuShowing);
-            m_messageText.SetActive(!m_pauseMenuShowing);
+            m_pauseMenuPanel.SetActive(pauseMenuShowing);
+            m_messageText.SetActive(!pauseMenuShowing);
 
-            Time.timeScale = m_pauseMenuShowing ? 0f : 1f;
+            Time.timeScale = pauseMenuShowing ? 0f : 1f;
         }
     }
 
     private void OnDestroy()
     {
-        m_PauseAction?.Disable();
+        pauseAction?.Disable();
     }
 
     public void GotoMainMenu()

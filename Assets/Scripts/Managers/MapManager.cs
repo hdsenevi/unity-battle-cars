@@ -1,30 +1,30 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour {
-	private static MapManager m_Instance = null;
-	private GameMode m_GameMode = GameMode.SINGLE_PLAYER;
+	private static MapManager instance = null;
+	private GameMode gameMode = GameMode.SINGLE_PLAYER;
 
 	// Use this for initialization
 	void Awake () {
 		DontDestroyOnLoad(this);
-		m_Instance = this;
+		instance = this;
 	}
 
 	public static MapManager GetInstance() {
-		if (m_Instance == null) {
+		if (instance == null) {
 			Debug.LogError("MapManager.GetInstance() : cannot get valid instance before initialization is done in Awake method");
 		}
 
-		return m_Instance;
+		return instance;
 	}
 
 	public void SetGameMode (GameMode gameMode) {
-		m_GameMode = gameMode;
+		gameMode = gameMode;
 	}
 
 	public GameMode GetGameMode() {
-		return m_GameMode;
+		return gameMode;
 	}
 }

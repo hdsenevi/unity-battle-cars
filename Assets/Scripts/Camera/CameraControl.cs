@@ -1,22 +1,22 @@
-﻿ using UnityEngine;
+using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public float m_DampTime = 0.2f;                 
-    public float m_ScreenEdgeBuffer = 4f;           
-    public float m_MinSize = 6.5f;                  
-    [HideInInspector] public Transform[] m_Targets; 
+    public float m_DampTime = 0.2f;
+    public float m_ScreenEdgeBuffer = 4f;
+    public float m_MinSize = 6.5f;
+    [HideInInspector] public Transform[] m_Targets;
 
 
-    private Camera m_Camera;                        
-    private float m_ZoomSpeed;                      
-    private Vector3 m_MoveVelocity;                 
-    private Vector3 m_DesiredPosition;              
+    private Camera camera;
+    private float zoomSpeed;
+    private Vector3 moveVelocity;
+    private Vector3 desiredPosition;
 
 
     private void Awake()
     {
-        m_Camera = GetComponentInChildren<Camera>();
+        camera = GetComponentInChildren<Camera>();
     }
 
 
@@ -31,7 +31,7 @@ public class CameraControl : MonoBehaviour
     {
         FindAveragePosition();
 
-        transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
+        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref moveVelocity, m_DampTime);
     }
 
 
@@ -54,20 +54,20 @@ public class CameraControl : MonoBehaviour
 
         averagePos.y = transform.position.y;
 
-        m_DesiredPosition = averagePos;
+        desiredPosition = averagePos;
     }
 
 
     private void Zoom()
     {
         float requiredSize = FindRequiredSize();
-        m_Camera.orthographicSize = Mathf.SmoothDamp(m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
+        camera.orthographicSize = Mathf.SmoothDamp(camera.orthographicSize, requiredSize, ref zoomSpeed, m_DampTime);
     }
 
 
     private float FindRequiredSize()
     {
-        Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
+        Vector3 desiredLocalPos = transform.InverseTransformPoint(desiredPosition);
 
         float size = 0f;
 
@@ -80,12 +80,12 @@ public class CameraControl : MonoBehaviour
 
             Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
 
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
+            size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.y));
 
-            if(m_Camera)
-                size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
+            if (camera)
+                size = Mathf.Max(size, Mathf.Abs(desiredPosToTarget.x) / camera.aspect);
         }
-        
+
         size += m_ScreenEdgeBuffer;
 
         size = Mathf.Max(size, m_MinSize);
@@ -98,9 +98,9 @@ public class CameraControl : MonoBehaviour
     {
         FindAveragePosition();
 
-        transform.position = m_DesiredPosition;
+        transform.position = desiredPosition;
 
-        if(m_Camera)
-            m_Camera.orthographicSize = FindRequiredSize();
+        if (camera)
+            camera.orthographicSize = FindRequiredSize();
     }
 }

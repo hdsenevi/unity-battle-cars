@@ -14,20 +14,20 @@ public class TankManager
     [HideInInspector] public int m_Wins;
 
 
-    private TwinStickMovement m_Movement;
-    private TankShooting m_Shooting;
-    private InputHandler m_InputHandler;
-    private GameObject m_CanvasGameObject;
-    private StateController m_StateController;
+    private TwinStickMovement movement;
+    private TankShooting shooting;
+    private InputHandler inputHandler;
+    private GameObject canvasGameObject;
+    private StateController stateController;
 
     public void SetupAI(List<Transform> wayPointList)
     {
-        m_StateController = m_Instance.GetComponent<StateController>();
-        m_StateController.SetupAI(true, wayPointList);
+        stateController = m_Instance.GetComponent<StateController>();
+        stateController.SetupAI(true, wayPointList);
 
-        m_Shooting = m_Instance.GetComponent<TankShooting>();
+        shooting = m_Instance.GetComponent<TankShooting>();
 
-        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
+        canvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
         PaintCar();
@@ -35,12 +35,12 @@ public class TankManager
 
     public void SetupPlayerTank()
     {
-        m_Movement = m_Instance.GetComponent<TwinStickMovement>();
-        m_Shooting = m_Instance.GetComponent<TankShooting>();
-        m_InputHandler = m_Instance.GetComponent<InputHandler>();
-        m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
+        movement = m_Instance.GetComponent<TwinStickMovement>();
+        shooting = m_Instance.GetComponent<TankShooting>();
+        inputHandler = m_Instance.GetComponent<InputHandler>();
+        canvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
 
-        m_InputHandler.Initialize(m_PlayerNumber);
+        inputHandler.Initialize(m_PlayerNumber);
 
         m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
@@ -49,35 +49,35 @@ public class TankManager
 
     public void DisableControl()
     {
-        if (m_Movement != null)
-            m_Movement.enabled = false;
+        if (movement != null)
+            movement.enabled = false;
 
-        if (m_StateController != null)
-            m_StateController.enabled = false;
+        if (stateController != null)
+            stateController.enabled = false;
 
-        if (m_InputHandler != null)
-            m_InputHandler.enabled = false;
+        if (inputHandler != null)
+            inputHandler.enabled = false;
 
-        m_Shooting.enabled = false;
+        shooting.enabled = false;
 
-        m_CanvasGameObject.SetActive(false);
+        canvasGameObject.SetActive(false);
     }
 
 
     public void EnableControl()
     {
-        if (m_InputHandler != null)
-            m_InputHandler.enabled = true;
+        if (inputHandler != null)
+            inputHandler.enabled = true;
 
-        if (m_Movement != null)
-            m_Movement.enabled = true;
+        if (movement != null)
+            movement.enabled = true;
 
-        if (m_StateController != null)
-            m_StateController.enabled = true;
+        if (stateController != null)
+            stateController.enabled = true;
 
-        m_Shooting.enabled = true;
+        shooting.enabled = true;
 
-        m_CanvasGameObject.SetActive(true);
+        canvasGameObject.SetActive(true);
     }
 
 

@@ -9,46 +9,46 @@ public class TwinStickMovement : MonoBehaviour
     public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
 
-    private InputHandler m_InputHandler;
-    private Rigidbody m_Rigidbody;
-    private float m_OriginalPitch;
-    private Vector2 m_MoveInputValue;
-    private Vector2 m_TurnInputValue;
-    private Vector3 m_CameraRight;
-    private Vector3 m_CameraForward;
+    private InputHandler inputHandler;
+    private Rigidbody rigidbody;
+    private float originalPitch;
+    private Vector2 moveInputValue;
+    private Vector2 turnInputValue;
+    private Vector3 cameraRight;
+    private Vector3 cameraForward;
 
     private void Awake()
     {
-        m_Rigidbody = GetComponent<Rigidbody>();
-        m_InputHandler = GetComponent<InputHandler>();
-        m_CameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
-        m_CameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
+        rigidbody = GetComponent<Rigidbody>();
+        inputHandler = GetComponent<InputHandler>();
+        cameraRight = Quaternion.Euler(0f, -30f, 0f) * Vector3.right;
+        cameraForward = Quaternion.Euler(0f, -30f, 0f) * Vector3.forward;
     }
 
 
     private void OnEnable()
     {
-        m_Rigidbody.isKinematic = false;
-        m_MoveInputValue = Vector2.zero;
-        m_TurnInputValue = Vector2.zero;
+        rigidbody.isKinematic = false;
+        moveInputValue = Vector2.zero;
+        turnInputValue = Vector2.zero;
     }
 
 
     private void OnDisable()
     {
-        m_Rigidbody.isKinematic = true;
+        rigidbody.isKinematic = true;
     }
 
 
     private void Start()
     {
-        m_OriginalPitch = m_MovementAudio.pitch;
+        originalPitch = m_MovementAudio.pitch;
     }
 
     private void Update()
     {
-        m_MoveInputValue = m_InputHandler.MoveInput;
-        m_TurnInputValue = m_InputHandler.TurnInput;
+        moveInputValue = inputHandler.MoveInput;
+        turnInputValue = inputHandler.TurnInput;
 
         EngineAudio();
     }
@@ -56,12 +56,12 @@ public class TwinStickMovement : MonoBehaviour
 
     private void EngineAudio()
     {
-        if (m_MoveInputValue.magnitude < 0.1f && m_TurnInputValue.magnitude < 0.1f)
+        if (moveInputValue.magnitude < 0.1f && turnInputValue.magnitude < 0.1f)
         {
             if (m_MovementAudio.clip == m_EngineDriving)
             {
                 m_MovementAudio.clip = m_EngineIdling;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
+                m_MovementAudio.pitch = Random.Range(originalPitch - m_PitchRange, originalPitch + m_PitchRange);
                 m_MovementAudio.Play();
             }
         }
@@ -70,7 +70,7 @@ public class TwinStickMovement : MonoBehaviour
             if (m_MovementAudio.clip == m_EngineIdling)
             {
                 m_MovementAudio.clip = m_EngineDriving;
-                m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
+                m_MovementAudio.pitch = Random.Range(originalPitch - m_PitchRange, originalPitch + m_PitchRange);
                 m_MovementAudio.Play();
             }
         }
@@ -85,18 +85,18 @@ public class TwinStickMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 movement = (m_CameraRight * m_MoveInputValue.y + m_CameraForward * -m_MoveInputValue.x) * m_Speed * Time.deltaTime;
+        Vector3 movement = (cameraRight * moveInputValue.y + cameraForward * -moveInputValue.x) * m_Speed * Time.deltaTime;
 
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        rigidbody.MovePosition(rigidbody.position + movement);
     }
 
     private void Turn()
     {
-        Vector3 playerDirection = (m_CameraRight * m_TurnInputValue.y + m_CameraForward * -m_TurnInputValue.x) * m_TurnSpeed * Time.deltaTime;
+        Vector3 playerDirection = (cameraRight * turnInputValue.y + cameraForward * -turnInputValue.x) * m_TurnSpeed * Time.deltaTime;
 
         if (playerDirection.sqrMagnitude > 0.0f)
         {
-            m_Rigidbody.MoveRotation(Quaternion.Slerp(m_Rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
+            rigidbody.MoveRotation(Quaternion.Slerp(rigidbody.rotation, Quaternion.LookRotation(playerDirection, Vector3.up), 1f));
         }
     }
 }
